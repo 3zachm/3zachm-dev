@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
+import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Navbar from '../components/Navbar'
 import HomeHead from '../components/HomeHead'
 
-const Home: NextPage = () => {
+const Projects: NextPage = () => {
 	const navOptions = [
 		{label: 'Projects', href: '/projects'},
 		{label: 'Social', href: '/social'},
@@ -11,15 +12,15 @@ const Home: NextPage = () => {
 	]
 	return (
 		<div className={styles.container}>
-			<HomeHead title="3zachm.dev" description="Hello" path=""/>
+			<HomeHead title="3zachm.dev" description="my projects" path="projects"/>
 			<body className="bg-black min-h-full">
 				<Navbar options = { navOptions } />
 				<h1 className="text-3xl font-bold underline font-Manrope text-white">
-					Home
+					Projects
 				</h1>
 			</body>
 		</div>
 	)
 }
 
-export default Home
+export default Projects

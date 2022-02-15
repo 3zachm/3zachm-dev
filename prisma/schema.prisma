@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model history {
+  time DateTime @unique(map: "time") @default(now()) @db.DateTime(0)
+  yep  Int?
+  cock Int?
+}
+
+model logs {
+  time    DateTime @default(now()) @db.DateTime(0)
+  id      Int?
+  user    String?  @db.VarChar(32)
+  message String?  @db.VarChar(512)
+  msg_id  Int      @id @default(autoincrement()) @db.MediumInt
+}
+
+model users {
+  id   String? @unique(map: "id") @db.VarChar(32)
+  yep  Int?
+  cock Int?
+  uid  Int     @id @default(autoincrement())
+}
