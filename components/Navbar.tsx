@@ -19,7 +19,7 @@ function Navbar({ options }: NavProps) {
         </Link>
     ))
 
-    return <div className="p-5 font-Manrope text-2xl flex items-center">{ main } {separator} { Navlist }</div>
+    return <div className="p-5 font-Manrope text-2xl flex items-center">{main} {separator} {Navlist}</div>
 }
 
 export default Navbar;
