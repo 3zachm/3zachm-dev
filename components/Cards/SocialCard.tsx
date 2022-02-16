@@ -6,7 +6,12 @@ import CardMedia from '@mui/material/CardMedia';
 
 function SocialCard() {
     return (
-        <Card sx={{minWidth: 400}}>
+        <Card sx={{minWidth: 400, maxWidth: '40vw'}}>
+            <CardMedia
+                component="img"
+                alt="profile banner"
+                image="/img/banner.jpg"
+            />
             <CardContent>
                 <h2>Social Card</h2>
                 <p>Test Content</p>
