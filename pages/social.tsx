@@ -1,24 +1,19 @@
-import type { NextPage } from 'next'
-import Navbar from '../components/Navbar'
+import type { ReactElement } from 'react'
 import HomeHead from '../components/HomeHead'
+import HomeLayout from '../layouts/HomeLayout'
 
-const Social: NextPage = () => {
-    const navOptions = [
-        { label: 'Projects', href: '/projects' },
-        { label: 'Social', href: '/social' },
-        { label: 'Misc', href: '/misc' },
-    ]
-    return (
-        <div>
-            <HomeHead title="3zachm.dev" description="my socials" path="social" />
-            <body className="bg-black min-h-full">
-                <Navbar options={navOptions} />
-                <h1 className="text-3xl font-bold underline font-Manrope text-white">
-                    Socials
-                </h1>
-            </body>
-        </div>
-    )
+function Social() {
+	return (
+		<>
+			<HomeHead title="3zachm.dev | Socials" description="my socials" path="social" />
+		</>
+	)
+}
+
+Social.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<HomeLayout>{page}</HomeLayout>
+	)
 }
 
 export default Social

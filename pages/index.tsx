@@ -1,23 +1,18 @@
-import type { NextPage } from 'next'
-import Navbar from '../components/Navbar'
+import type { ReactElement } from 'react'
 import HomeHead from '../components/HomeHead'
+import HomeLayout from '../layouts/HomeLayout'
 
-const Home: NextPage = () => {
-	const navOptions = [
-		{ label: 'Projects', href: '/projects' },
-		{ label: 'Social', href: '/social' },
-		{ label: 'Misc', href: '/misc' },
-	]
+function Home() {
 	return (
-		<div>
-			<HomeHead title="3zachm.dev" description="Hello" path="" />
-			<body className="bg-black min-h-full">
-				<Navbar options={navOptions} />
-				<h1 className="text-3xl font-bold underline font-Manrope text-white">
-					Home
-				</h1>
-			</body>
-		</div>
+		<>
+			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
+		</>
+	)
+}
+
+Home.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<HomeLayout>{page}</HomeLayout>
 	)
 }
 
