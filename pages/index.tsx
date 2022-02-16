@@ -6,6 +6,7 @@ function Home() {
 	return (
 		<>
 			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
+			<h1 className="text-5xl">hello</h1>
 		</>
 	)
 }

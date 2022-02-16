@@ -12,14 +12,18 @@ function HomeLayout(props: HomeProps) {
 		{ label: 'Misc', href: '/misc' },
 	]
     return (
-        <div>
-            <body className="bg-black min-h-full">
+        <>
+            <body className="bg-black min-h-screen text-white overflow-hidden">
                 <Navbar options={navOptions} />
-                <div className="container">
-                    {props.children}
-                </div>
+                <header id="main-header" className="h-screen">
+                    <div id="main-header-center" className="h-full w-full">
+                        <div className="flex justify-center items-center h-full">
+                            {props.children}
+                        </div>
+                    </div>
+                </header>
             </body>
-        </div>
+        </>
     );
 }
 
