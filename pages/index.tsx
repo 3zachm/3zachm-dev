@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
 import Navbar from '../components/Navbar'
 import HomeHead from '../components/HomeHead'
 
@@ -10,7 +9,7 @@ const Home: NextPage = () => {
 		{ label: 'Misc', href: '/misc' },
 	]
 	return (
-		<div className={styles.container}>
+		<div>
 			<HomeHead title="3zachm.dev" description="Hello" path="" />
 			<body className="bg-black min-h-full">
 				<Navbar options={navOptions} />
