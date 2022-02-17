@@ -1,14 +1,14 @@
 import type { ReactElement } from 'react'
-import HomeHead from '../components/HomeHead'
-import HomeLayout from '../layouts/HomeLayout'
+import HomeHead from '../../components/HomeHead'
+import HomeLayout from '../../layouts/HomeLayout'
 import { Text } from '@nextui-org/react'
 
 function Home() {
 	return (
 		<>
-			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
+			<HomeHead title="3zachm.dev | YEP" description="Counting YEPs since June 11th 2021" path="yep" />
 			<Text h1 className="text-5xl text-white">
-				Hello
+				YEP div
 			</Text>
 		</>
 	)

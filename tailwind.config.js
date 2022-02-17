@@ -10,7 +10,10 @@ module.exports = {
         Manrope: ["Manrope", "sans-serif"],
         Roboto: ["Roboto", "sans-serif"],
         Material: ["Material Icons", "sans-serif"],
-      }
+      },
+      backgroundImage: {
+        "pfp": "url('/img/pfp.webp')",
+      },
     },
   },
   plugins: [],
