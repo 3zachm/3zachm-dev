@@ -10,7 +10,7 @@ function SocialCard() {
         );
     }
     return (
-        <Card cover css={{ position: 'relative', minWidth: 540, minHeight: 400, maxWidth: '35vw' }}>
+        <Card cover shadow css={{ position: 'relative', minWidth: 540, minHeight: 400, maxWidth: '35vw' }}>
             <Card.Body className="overflow-hidden">
                 <Card.Image
                     src='/img/banner.jpg'
@@ -66,7 +66,7 @@ function SocialCard() {
                             </Tooltip>
                             <Button flat auto rounded css={{ color: '#fff', bg: '#ff66aa00' }}>
                                 <Link className="text-white" href="https://osu.ppy.sh/users/8630110">
-                                    <Image src='/img/icons/osu.png' alt='osu' width="48px" height="48px"></Image>
+                                    <Image src='/img/icons/osu.png' alt='osu' width="46px" height="46px"></Image>
                                 </Link>
                             </Button>
                             <Button flat auto rounded css={{ color: '#fff', bg: '#00000000' }}>
