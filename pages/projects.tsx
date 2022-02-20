@@ -4,17 +4,20 @@ import type { ReactElement } from 'react'
 import ProjectCard from '../components/Cards/ProjectCard'
 import HomeHead from '../components/HomeHead'
 import HomeLayout from '../layouts/HomeLayout'
+import Script from 'next/script'
 
 function Projects() {
 	return (
 		<>
 			<HomeHead title="3zachm.dev | Projects" description="my projects" path="projects" />
-			<div className="max-w-5/12 min-w-[300px] pt-[25vh] z-0">
-				<div className="flex flex-col">
-					<Text h1 className="text-5xl text-white mb-20 self-center"> Projects </Text>
-				</div>
+			<div className="w-screen pt-[200px] z-0 justify-center flex pointer-events-none">
 				<div>
-					<Grid className="w-[100%] mb-20">
+					<div className="flex justify-center">
+						<Text h1 size={60} css={{ textGradient: '45deg, $purple500 -20%, $pink300 100%' }} weight="bold" className="text-white mb-[110px] self-center select-none">
+							Projects
+						</Text>
+					</div>
+					<Grid className="w-[100%] mb-20 select-none">
 						<ProjectCard image='/img/proj/asayake.webp' bgBlur='#000000' borderTop='$borderWeights$light solid rgba(255, 255, 255, 0.2)' content={
 							<>
 								<Row>

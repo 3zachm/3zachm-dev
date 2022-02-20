@@ -7,7 +7,7 @@ function Home() {
 	return (
 		<>
 			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
-			<Text h1 className="text-5xl text-white">
+			<Text h1 className="text-5xl text-white w-screen text-center">
 				Hello
 			</Text>
 		</>

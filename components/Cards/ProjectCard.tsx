@@ -10,27 +10,27 @@ interface ProjectCardProps {
 
 function ProjectCard(props: ProjectCardProps) {
     return (
-        <Card cover hoverable shadow css={{ maxWidth: '100%' }}>
-        <Card.Body>
-          <Card.Image
-            src= {props.image}
-            height={400}
-            width="100%"
-            alt="Card example background"
-          />
-        </Card.Body>
-        <Card.Footer
-          blur
-          css={{
-            position: 'absolute',
-            bgBlur: props.bgBlur,
-            borderTop: props.borderTop,
-            bottom: 0,
-            zIndex: 1
-          }}
-          >
-          {props.content}
-        </Card.Footer>
+        <Card className="w-[800px]" cover hoverable shadow>
+          <Card.Body>
+            <Card.Image
+              src= {props.image}
+              height={400}
+              width="100%"
+              alt="Card example background"
+            />
+          </Card.Body>
+          <Card.Footer
+            blur
+            css={{
+              position: 'absolute',
+              bgBlur: props.bgBlur,
+              borderTop: props.borderTop,
+              bottom: 0,
+              zIndex: 1
+            }}
+            >
+            {props.content}
+          </Card.Footer>
         <Divider />
       </Card>
 
