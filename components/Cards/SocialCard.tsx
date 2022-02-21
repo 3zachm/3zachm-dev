@@ -63,7 +63,7 @@ function SocialCard() {
         );
     }
     return (
-        <Card cover shadow css={{ position: 'relative', minWidth: 540, minHeight: 400, maxWidth: '35vw' }} className='select-none'>
+        <Card cover shadow className='select-none relative md:min-w-[540px] min-h-[400px] md:max-w-[35vw]'>
             <Card.Body className="overflow-hidden">
                 <m.div initial="initial" animate="animate" variants={bannerAnimation}>
                     <Card.Image

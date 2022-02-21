@@ -2,6 +2,7 @@ import type { ReactElement } from 'react'
 import SocialCard from '../components/Cards/SocialCard'
 import HomeHead from '../components/HomeHead'
 import HomeLayout from '../layouts/HomeLayout'
+import { homeMain } from '../layouts/NavTemplates';
 
 function Social() {
 	return (
@@ -14,7 +15,7 @@ function Social() {
 
 Social.getLayout = function getLayout(page: ReactElement) {
 	return (
-		<HomeLayout>{page}</HomeLayout>
+		<HomeLayout navOptions={homeMain}>{page}</HomeLayout>
 	)
 }
 

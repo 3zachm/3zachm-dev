@@ -3,22 +3,19 @@ import useScript from '../hooks/useScript';
 import { useRouter } from 'next/router';
 import { AnimatePresence, domAnimation, LazyMotion, m, Transition, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { NavTemplate } from '../layouts/NavTemplates';
+import { AnimationTemplate } from '../types/Animation';
 
 interface HomeProps {
+    navOptions: NavTemplate[];
     children: React.ReactNode;
-}
-
-interface Animation {
-    name: string;
-    variants: Variants;
-    transition: Transition;
 }
 
 function HomeLayout(props: HomeProps) {
     const [isLoaded, setLoaded] = useState(false);
     const router = useRouter();
-    const animation: Animation = {
-        name: "Rotate X",
+    const animation: AnimationTemplate = {
+        name: "fade in",
         variants: {
             initial: {
                 opacity: 0,
@@ -39,29 +36,19 @@ function HomeLayout(props: HomeProps) {
             duration: 0.3
         }
     };
-    const navOptions = [
-        { label: 'Home', href: '/' },
-        { label: 'Projects', href: '/projects' },
-        { label: 'Social', href: '/social' },
-        { label: 'Misc', href: '/misc' },
-        { label: 'Patchouli?', href: '#' },
-    ]
+    const navOptions = props.navOptions;
     useScript('/js/home/patchy.js');
     useScript('/js/home/main.js');
     useEffect(() => {
         setLoaded(true);
     }, []);
-
     if (!isLoaded) {
         return <></>;
     }
     return (
-
-
         <body className="bg-zinc-800 min-h-screen text-white overflow-x-hidden overflow-y-scroll scroll-smooth w-screen invisible-scrollbar">
             <Navbar options={navOptions} />
             <canvas width="900" height="500" id="main-bg" className="fixed"></canvas>
-
 
             <LazyMotion features={domAnimation}>
                 <AnimatePresence exitBeforeEnter>
@@ -82,7 +69,6 @@ function HomeLayout(props: HomeProps) {
                     </m.div>
                 </AnimatePresence>
             </LazyMotion>
-                
         </body >
     );
 }

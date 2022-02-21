@@ -5,6 +5,7 @@ import ProjectCard from '../components/Cards/ProjectCard'
 import HomeHead from '../components/HomeHead'
 import HomeLayout from '../layouts/HomeLayout'
 import Script from 'next/script'
+import { homeMain } from '../layouts/NavTemplates';
 
 function Projects() {
 	return (
@@ -116,7 +117,7 @@ function Projects() {
 
 Projects.getLayout = function getLayout(page: ReactElement) {
 	return (
-		<HomeLayout>{page}</HomeLayout>
+		<HomeLayout navOptions={homeMain}>{page}</HomeLayout>
 	)
 }
 

@@ -16,9 +16,12 @@
     "framer-motion": "^6.2.6",
     "mysql2": "^2.3.3",
     "next": "^12.1.0",
+    "next-auth": "^4.2.1",
     "next-themes": "^0.0.15",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-countup": "^6.1.1",
+    "react-dom": "17.0.2",
+    "swr": "^1.2.2"
   },
   "devDependencies": {
     "@types/node": "17.0.17",

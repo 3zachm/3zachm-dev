@@ -1,3 +1,4 @@
+// THIS IS A MESS LMAO I'M SORRY :(
 class Frame {
     constructor(x, y, xOff, yOff, width, height) {
         this.x = x;
@@ -22,6 +23,10 @@ class Patchouli {
         this.sheet = sheet;
         this.xpos = xpos;
         this.ypos = ypos;
+        this.xspeed = 0;
+        this.yspeed = 0;
+        this.mouseX = 0;
+        this.mouseY = 0;
         this.xgoal = xpos;
         this.ygoal = ypos;
         this.animation = animation;
@@ -34,12 +39,54 @@ class Patchouli {
         this.waitTime = getRandomInt(40, 300);
         this.paused = false;
         this.dragged = false;
+        this.gravity = 2;
+        this.maxY = 0;
+        this.maxX = 0;
+        this.minY = 0;
+        this.minX = 0;
     }
 
     step() {
+        this.maxY = canvas.height - 100;
+        this.minY = this.getCurrentFrame().height / 2;
+        this.maxX = canvas.width - this.getCurrentFrame().width;
+        this.minX = 0;
         if (this.dragged) {
             this.animation = this.animations.Dragged;
             return;
+        }
+        else if (this.animation == this.animations.Floating || this.animation == this.animations.Falling) {
+            this.yspeed += this.gravity;
+            this.ypos += this.yspeed;
+
+            if (this.ypos >= this.maxY) {
+                this.ypos = this.maxY;
+                this.yspeed *= -1.0;
+                this.yspeed *= 0.5;
+            }
+            this.xpos += this.xspeed;
+            if (this.xpos <= this.minX) {
+                this.xpos = this.minX;
+                this.xspeed *= -1.0;
+            }
+            if (this.xpos >= this.maxX) {
+                this.xpos = this.maxX;
+                this.xspeed *= -1.0;
+            }
+            if (this.ypos >= this.maxY - 5) {
+                this.xspeed *= 0.79;
+            }
+            else {
+                this.xspeed *= 0.99;
+            }
+            
+            if (Math.abs (this.yspeed) > 1) {
+                return;
+            }
+            // else if (Math.abs (this.xspeed) > 1) {
+            //     this.setFall();
+            //     return;
+            // }
         }
         this.evalAction();
         this.frameTime++;
@@ -105,7 +152,7 @@ class Patchouli {
         }
         else if (this.animation == this.animations.Floating){
             if (this.ypos != this.ygoal) {
-                this.floatTo(this.ygoal);
+                return;
             }
             else {
                 let r = Math.random();
@@ -312,32 +359,10 @@ const Animations1 = {
     ],
     Floating: [
         new Animation([
-            new Frame(10,  109, 0, -1, 54, 101),
-            new Frame(70,  110, 0,  0, 54, 100),
-            new Frame(130, 110, 0,  0, 53, 100),
-            new Frame(189, 111, 0,  0, 53, 99),
-            new Frame(248, 110, 1, -1, 51, 100),
-            new Frame(305, 110, 1, -2, 50, 100),
-            new Frame(361, 109, 1, -2, 49, 101),
-            new Frame(416, 109, 0, -2, 50, 101),
-            new Frame(472, 108, 0, -3, 51, 102),
-            new Frame(529, 108, 0, -2, 52, 102),
-            new Frame(587, 108, 0, -2, 53, 102),
-            new Frame(646, 109, 0, -1, 54, 101),
+            new Frame(19,  517, 0, 0, 92, 88),
         ], 2, true),
         new Animation([
-            new Frame(1354,109, 0, -1, 54, 101),
-            new Frame(1294,110, 0,  0, 54, 100),
-            new Frame(1235,110, 1,  0, 53, 100),
-            new Frame(1176,111, 1,  0, 53, 99),
-            new Frame(1119,110, 2, -1, 51, 100),
-            new Frame(1063,110, 3, -2, 50, 100),
-            new Frame(1008,109, 4, -2, 49, 101),
-            new Frame(952, 109, 4, -2, 50, 101),
-            new Frame(895, 108, 3, -3, 51, 102),
-            new Frame(837, 108, 2, -2, 52, 102),
-            new Frame(778, 108, 1, -2, 53, 102),
-            new Frame(719, 109, 1, -1, 54, 101),
+            new Frame(1075,618, 0,  0,  92, 88),
         ], 2, true)
     ],
     Walking: [
@@ -560,6 +585,8 @@ function mousedown(e) {
     let ev = getMousePos(canvas, e);
     selectedPatchy = getSelectedPatchy(ev);
     if (selectedPatchy != null) {
+        selectedPatchy.mouseX = ev.x;
+        selectedPatchy.mouseY = ev.y;
         selectedPatchy.offset={
             x: ev.x - selectedPatchy.xpos,
             y: ev.y - selectedPatchy.ypos
@@ -570,8 +597,16 @@ function mousedown(e) {
 function mousemove(e) {
     let ev = getMousePos(canvas, e);
     if (selectedPatchy != null) {
+        console.log(selectedPatchy.mouseX, ev.x);
         selectedPatchy.xpos = ev.x - selectedPatchy.offset.x;
         selectedPatchy.ypos = ev.y - selectedPatchy.offset.y;
+        selectedPatchy.xspeed = selectedPatchy.xspeed / 2 + (ev.x - selectedPatchy.mouseX);
+        selectedPatchy.yspeed = selectedPatchy.yspeed / 2 + (ev.y - selectedPatchy.mouseY);
+        if (elapsed > fpsInterval) {
+            selectedPatchy.mouseX = ev.x;
+            selectedPatchy.mouseY = ev.y;
+        }
+
         selectedPatchy.dragged = true;
         selectedPatchy.paused = false;
         selectedPatchy.animation = selectedPatchy.animations.Dragged;
