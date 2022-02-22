@@ -278,6 +278,7 @@ class Patchouli {
 
     setIdle() {
         if (this.animation != this.animations.Idle) {
+            this.paused = false;
             this.idleTime = 0;
             this.animation = this.animations.Idle;
             this.animationFrame = 0;
@@ -495,6 +496,7 @@ let fpsInterval, startTime, now, then, elapsed;
 let patchySheet = null;
 let selectedPatchy = null;
 let updateRender = true;
+let resetAnimation = false;
 
 function drawFrame(img, frameX, frameY, width, height, canvasX, canvasY) {
     ctx.drawImage(img,
@@ -509,12 +511,17 @@ function step() {
     if (elapsed > fpsInterval) {
         then = now - (elapsed % fpsInterval);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (ctx.canvas.height != window.innerHeight) { resetAnimation = true; }
         ctx.canvas.width  = window.innerWidth;
         ctx.canvas.height = window.innerHeight;
 
         updateRender = (fps / 30) - frameCount <= 0 ? true : false;
 
         chars.forEach(element => {
+            if (resetAnimation) {
+                element.setIdle();
+            }
             element.ygoal = canvas.height - 100;
             if (updateRender) {
                 element.step();
@@ -526,6 +533,7 @@ function step() {
 
             drawFrame(img, frame.x, frame.y, frame.width, frame.height, posX, posY);
         });
+        resetAnimation = false;
         frameCount++;
     }
 
@@ -572,6 +580,10 @@ async function startPatchy(sheet) {
 canvas.addEventListener("mousedown",mousedown);
 canvas.addEventListener("mouseup",mouseup);
 canvas.addEventListener("mousemove",mousemove);
+
+canvas.addEventListener("touchstart",mousedown);
+canvas.addEventListener("touchend",mouseup);
+canvas.addEventListener("touchmove",mousemove);
 
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();

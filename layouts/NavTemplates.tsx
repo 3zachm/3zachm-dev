@@ -3,7 +3,7 @@ interface NavTemplate {
         href: string;
 }
 const homeMain: NavTemplate[] = [
-    // { label: 'Home', href: '/' },
+    { label: 'Home', href: '/' },
     { label: 'Projects', href: '/projects' },
     { label: 'Social', href: '/social' },
     { label: 'Misc', href: '/misc' },

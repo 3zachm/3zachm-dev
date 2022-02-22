@@ -9,7 +9,6 @@ async function onLoad() {
     patchySpawner = [];
     for (var i = 0; i < aTags.length; i++) {
         if (aTags[i].innerHTML == "Patchouli?") {
-            console.log("Found Patchouli!");
             patchySpawner.push(aTags[i]);
         }
     }

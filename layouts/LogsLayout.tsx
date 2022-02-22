@@ -1,17 +1,15 @@
 import Navbar from '../components/Navbar';
-import useScript from 'react-script-hook';
+import useScript from '../hooks/useScript';
 import { useRouter } from 'next/router';
 import { AnimatePresence, domAnimation, LazyMotion, m, Transition, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { NavTemplate } from '../layouts/NavTemplates';
 import { AnimationTemplate } from '../types/Animation';
 
-interface HomeProps {
-    navOptions: NavTemplate[];
+interface LogsProps {
     children: React.ReactNode;
 }
 
-function HomeLayout(props: HomeProps) {
+function LogsLayout(props: LogsProps) {
     const [isLoaded, setLoaded] = useState(false);
     const router = useRouter();
     const animation: AnimationTemplate = {
@@ -36,20 +34,8 @@ function HomeLayout(props: HomeProps) {
             duration: 0.3
         }
     };
-    const navOptions = props.navOptions;
-    useScript({src: '/js/home/patchy.js', checkForExisting: true,});
-    useScript({src: '/js/home/main.js', checkForExisting: true,});
-    useEffect(() => {
-        setLoaded(true);
-    }, []);
-    if (!isLoaded) {
-        return <></>;
-    }
     return (
         <>
-            <Navbar options={navOptions} />
-            <canvas width="900" height="500" id="main-bg" className="fixed"></canvas>
-
             <LazyMotion features={domAnimation}>
                 <AnimatePresence exitBeforeEnter>
                     <m.div key={router.route.concat(animation.name)}
@@ -73,4 +59,4 @@ function HomeLayout(props: HomeProps) {
     );
 }
 
-export default HomeLayout;
+export default LogsLayout;

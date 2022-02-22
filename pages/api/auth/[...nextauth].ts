@@ -10,4 +10,18 @@ export default NextAuth({
           })
         // ...add more providers here
     ],
+    session: {
+        strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60,
+        updateAge: 24 * 60 * 60,
+    },
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            // console.log(user, account, profile, email, credentials);
+            return true;
+        }
+    },
+    pages: {
+        signIn: '/signin',
+    },
 })

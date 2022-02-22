@@ -4,6 +4,32 @@ import MiscCard from '../components/Cards/MiscCard';
 import HomeHead from '../components/HomeHead'
 import HomeLayout from '../layouts/HomeLayout'
 import { homeMain } from '../layouts/NavTemplates';
+import { m, Variants } from "framer-motion";
+
+const containerAnimation: Variants = {
+    initial: {
+        opacity: 1,
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 2,
+            delayChildren: 0.5,
+            staggerChildren: 0.1,
+        }
+    },
+}
+
+const itemAnimation: Variants = {
+    initial: {
+        opacity: 0,
+        x: 100,
+    },
+    animate: {
+        opacity: 1,
+        x: 0,
+    },
+}
 
 function Misc() {
 	const list = [
@@ -13,9 +39,9 @@ function Misc() {
 			url: '/yep',
 		},
 		{
-			title: 'Emote Lister',
+			title: 'secret stuff >:)',
 			img: '/img/misc/xqc.webp',
-			url: '/emotes',
+			url: '/logs',
 		},
 		{
 			title: 'ぬくぬくにぎりめし',
@@ -27,20 +53,17 @@ function Misc() {
 		<>
 			<HomeHead title="3zachm.dev | Misc" description="misc" path="misc" />
 			<div className="w-screen z-0 justify-center flex pointer-events-none">
-				<div className="max-w-[100%] min-w-[50vw] justify-start flex flex-row pt-[60px]">
-					{/* <div className="min-w-[50vw] items-center flex justify-center pt-0">
-						<Text h1 size={60} css={{ textGradient: '45deg, $purple500 -20%, $pink300 100%' }} weight="bold" className="text-white self-center select-none p-5 mb-[110px]">
-							Pages
-						</Text>
-					</div> */}
+				<m.div initial="initial" animate="animate" variants={containerAnimation} className="max-w-[100%] min-w-[50vw] justify-start flex flex-row pt-[60px]">
 					<Grid.Container gap={2} justify="flex-start">
 							{list.map((item, index) => (
 								<Grid xs={6} sm={4} key={index}>
-									<MiscCard item={item} />
+									<m.div variants={itemAnimation}>
+										<MiscCard item={item} />
+									</m.div>
 								</Grid>
 							))}
 					</Grid.Container>
-				</div>
+				</m.div>
 			</div>
 		</>
 	)

@@ -1,7 +1,7 @@
 import { Card, Text, Col, Row, Button, Link, Tooltip } from "@nextui-org/react";
 import { MouseEventHandler } from "react";
 import Image from "next/image";
-import { m, Transition, Variants } from "framer-motion";
+import { m, Variants } from "framer-motion";
 
 const bannerAnimation: Variants = {
     initial: {

@@ -10,9 +10,7 @@ function YepHome() {
 	return (
 		<>
 			<HomeHead title="3zachm.dev | YEP" description="Counting YEPs since June 11th 2021" path="yep" />
-			<Text h1 className="text-5xl text-white">
-				<UserCard />
-			</Text>
+			<UserCard />
 		</>
 	)
 }
