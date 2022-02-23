@@ -24,6 +24,10 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
 }
 
+type AuthProps = {
+    children: any;
+}
+
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppPropsWithLayout) {
     // Use the layout defined at the page level, if available
     const getLayout = Component.getLayout ?? ((page) => page)
@@ -46,7 +50,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
     )
 }
 
-function Auth({ children }) {
+function Auth({ children }: AuthProps) {
     const { data: session, status } = useSession({ required: true })
     const isUser = !!session?.user
 

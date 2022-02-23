@@ -1,14 +1,16 @@
 import NextAuth from "next-auth";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import DiscordProvider from "next-auth/providers/discord";
+import { prisma } from '../../../prisma/db';
+import { moderators } from "../../../config";
 
 export default NextAuth({
-    // Configure one or more authentication providers
+    adapter: PrismaAdapter(prisma),
     providers: [
         DiscordProvider({
             clientId: process.env.DISCORD_CLIENT_ID,
             clientSecret: process.env.DISCORD_CLIENT_SECRET
           })
-        // ...add more providers here
     ],
     session: {
         strategy: "jwt",
@@ -17,8 +19,20 @@ export default NextAuth({
     },
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-            // console.log(user, account, profile, email, credentials);
             return true;
+        },
+        async jwt({ token, profile }) {
+            if (profile) {
+                token.discordId = profile.id;
+            }
+            return token;
+        },
+        async session({ session, token, user}) {
+            if (token.discordId) {
+                session.discordId = token.discordId;
+                session.isMod = moderators.includes(token.discordId);
+            }
+            return session;
         }
     },
     pages: {
