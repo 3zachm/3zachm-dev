@@ -1,4 +1,4 @@
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Logs/Navbar';
 import useScript from '../hooks/useScript';
 import { useRouter } from 'next/router';
 import { AnimatePresence, domAnimation, LazyMotion, m, Transition, Variants } from 'framer-motion';
@@ -36,6 +36,7 @@ function LogsLayout(props: LogsProps) {
     };
     return (
         <>
+            <Navbar options={[]}/>
             <LazyMotion features={domAnimation}>
                 <AnimatePresence exitBeforeEnter>
                     <m.div key={router.route.concat(animation.name)}

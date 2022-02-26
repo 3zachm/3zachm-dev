@@ -24,13 +24,14 @@ export default NextAuth({
         async jwt({ token, profile }) {
             if (profile) {
                 token.discordId = profile.id;
+                token.isMod = moderators.includes(String(token.discordId));
             }
             return token;
         },
         async session({ session, token, user}) {
             if (token.discordId) {
                 session.discordId = token.discordId;
-                session.isMod = moderators.includes(token.discordId);
+                session.isMod = token.isMod;
             }
             return session;
         }

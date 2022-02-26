@@ -609,7 +609,7 @@ function mousedown(e) {
 function mousemove(e) {
     let ev = getMousePos(canvas, e);
     if (selectedPatchy != null) {
-        console.log(selectedPatchy.mouseX, ev.x);
+        // console.log(selectedPatchy.mouseX, ev.x);
         selectedPatchy.xpos = ev.x - selectedPatchy.offset.x;
         selectedPatchy.ypos = ev.y - selectedPatchy.offset.y;
         selectedPatchy.xspeed = selectedPatchy.xspeed / 2 + (ev.x - selectedPatchy.mouseX);

@@ -13,7 +13,7 @@ const easeOutElastic = (t: number, b: number, c: number, d: number): number => {
 };
 
 function UserCard() {
-    const { data, error } = useSWR('/api/yep/stats', fetcher);
+    const { data, error } = useSWR('/api/anny/counts', fetcher);
     const loadSpinner = <Loading type="points-opacity" />;
     let content: React.ReactNode = null;
     if (error) return <Text>failed to load ;w;</Text>;
