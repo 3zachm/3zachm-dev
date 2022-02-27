@@ -3,12 +3,14 @@ import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { createTheme, Loading, NextUIProvider } from "@nextui-org/react"
 import { SessionProvider, useSession } from "next-auth/react"
+import { createTheme as createMUI, ThemeProvider } from '@mui/material/styles';
 import '../styles/globals.css';
 
-const lightTheme = createTheme({
-    type: 'light',
-    theme: {}
-})
+const darkMuiTheme = createMUI({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 const darkTheme = createTheme({
     type: 'dark',
@@ -36,14 +38,18 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
         <SessionProvider session={session}>
             {Component.auth ? (
                 <Auth>
+                    <ThemeProvider theme={darkMuiTheme}>
+                        <NextUIProvider theme={darkTheme}>
+                            {getLayout(<Component {...pageProps} />)}
+                        </NextUIProvider>
+                    </ThemeProvider>
+                </Auth>
+            ) : (
+                <ThemeProvider theme={darkMuiTheme}>
                     <NextUIProvider theme={darkTheme}>
                         {getLayout(<Component {...pageProps} />)}
                     </NextUIProvider>
-                </Auth>
-            ) : (
-                <NextUIProvider theme={darkTheme}>
-                    {getLayout(<Component {...pageProps} />)}
-                </NextUIProvider>
+                </ThemeProvider>
             )}
 
         </SessionProvider>
@@ -60,5 +66,5 @@ function Auth({ children }: AuthProps) {
 
     // Session is being fetched, or no user.
     // If no user, useEffect() will redirect.
-    return <div className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2" ><Loading/></div>
+    return <div className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2" ><Loading /></div>
 }

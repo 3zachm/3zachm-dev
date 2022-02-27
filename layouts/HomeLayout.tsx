@@ -59,7 +59,7 @@ function HomeLayout(props: HomeProps) {
                         exit="exit"
                         variants={animation.variants}
                         transition={animation.transition}>
-                        <header id="main-header" className="h-screen">
+                        <header id="main-header" className="h-full">
                             <div id="main-header-center" className="min-h-screen w-full">
                                 <div className="flex justify-center items-center min-h-screen h-full">
                                     {props.children}
