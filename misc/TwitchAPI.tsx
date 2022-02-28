@@ -2,6 +2,20 @@ import Redis from "ioredis";
 
 let redis = new Redis(process.env.REDIS_URL);
 
+async function applyCache(key: string, url: string, cacheTime: number) {
+    if (await redis.get(key)) {
+        return JSON.parse(await redis.get(key) as string);
+    }
+    else {
+        const response = await fetchEndpoint(url);
+        if (response.data) {
+            await redis.set(key, JSON.stringify(response.data), "EX", cacheTime);
+        }
+        console.log(response);
+        return response.data;
+    }
+}
+
 async function authTwitch() {
     let auth = await redis.get("TWITCH.OAUTH");
     if (auth) {
@@ -44,23 +58,20 @@ async function getUserByName(username: string | undefined) {
     if (!username) {
         return;
     }
-    const response = await fetchEndpoint(`https://api.twitch.tv/helix/users?login=${username}`);
-    return response.data;
+    return await applyCache("TWITCH.USER_" + username, `https://api.twitch.tv/helix/users?login=${username}`, 600);
 }
 
 async function getUserByID(userID: number) {
-    const response = await fetchEndpoint(`https://api.twitch.tv/helix/users?id=${userID}`);
-    return response.data;
+    return await applyCache("TWITCH.USER_" + userID, `https://api.twitch.tv/helix/users?id=${userID}`, 600);
 }
 
-async function getChannelBadges(channelID: number) {
-    const response = await fetchEndpoint(`https://api.twitch.tv/helix/chat/badges?broadcaster_id=${channelID}`);
-    return response.data;
+async function getChannelBadges(channelID: string) {
+    return await applyCache("TWITCH.CHANNEL_BADGES_" + channelID, `https://api.twitch.tv/helix/chat/badges?broadcaster_id=${channelID}`, 600);
+
 }
 
 async function getGlobalBadges() {
-    const response = await fetchEndpoint(`https://api.twitch.tv/helix/chat/badges/global`);
-    return response.data;
+    return await applyCache("TWITCH.GLOBAL_BADGES", `https://api.twitch.tv/helix/chat/badges/global`, 3600);
 }
 
 export {
