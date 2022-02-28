@@ -65,12 +65,10 @@ function LogDash(props: LogProps) {
     let tempSd = formValues.startDate ? formValues.startDate.toISOString() : "";
     let tempEd = formValues.endDate ? formValues.endDate.toISOString() : "";
     let apiURL = `/api/anny/logs?p=${pageIndex}&u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
+    let apiCountURL = `/api/anny/logs_count?u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
 
     const logs = useSWR(apiURL, fetcher).data;
-    let count;
-    if (logs) {
-        count = logs.pagination;
-    }
+    const count = useSWR(apiCountURL, fetcher).data;
 
     // --------------------loading handling--------------------
     let logContent;
@@ -94,7 +92,7 @@ function LogDash(props: LogProps) {
     }
     // pagination--------------------
     if (!count) paginationDiv = <Loading type="points-opacity" />;
-    else paginationDiv = <Pagination size={"lg"} total={Math.ceil(count.count / count.itemCount)} initialPage={pageIndex} onChange={(page) => setPageIndex(page)} />;
+    else paginationDiv = <Pagination size={"lg"} total={Math.ceil(count.total / count.count)} initialPage={pageIndex} onChange={(page) => setPageIndex(page)} />;
     // misc--------------------
     const fullForm = (
         <>

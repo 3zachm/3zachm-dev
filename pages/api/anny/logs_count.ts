@@ -57,11 +57,8 @@ export default async function handler(
         }
     }
 
-    const offset = (page - 1) * itemCount;
-    const logs = await prisma.logs.findMany({
-        orderBy: {
-            time: "desc"
-        },
+    const count = await prisma.logs.aggregate({
+        _count: true,
         where: {
             id: userID,
             user: username,
@@ -73,12 +70,6 @@ export default async function handler(
                 lte: endDate
             }
         },
-        skip: offset,
-        take: itemCount,
     });
-
-    const pagination = {
-        count: itemCount, page: page
-    }
-    res.status(200).json({ data: logs, pagination: pagination })
+    res.status(200).json({ total: count._count, count: itemCount })
 }
