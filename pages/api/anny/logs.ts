@@ -23,8 +23,8 @@ export default async function handler(
     const page = req.query.p ? parseInt(req.query.p as string) : 1;
     let username = req.query.u ? req.query.u as string : undefined;
     const search = req.query.q ? req.query.q as string : undefined;
-    const startDate = req.query.sd ?  new Date(req.query.sd) as Date : new Date(0) as Date;
-    const endDate = req.query.ed ?  new Date(req.query.ed) as Date : new Date() as Date;
+    const startDate = req.query.sd ?  new Date(req.query.sd as string) as Date : new Date(0) as Date;
+    const endDate = req.query.ed ?  new Date(req.query.ed as string) as Date : new Date() as Date;
     console.log(`${page} ${username} ${search} ${startDate} ${endDate}`)
     let userResponse
     if (username) {
