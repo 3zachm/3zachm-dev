@@ -11,37 +11,42 @@ interface HomeProps {
     children: React.ReactNode;
 }
 
+const animation: AnimationTemplate = {
+    name: "fade in",
+    variants: {
+        initial: {
+            opacity: 0,
+            position: 'relative',
+        },
+        animate: {
+            opacity: 1,
+            x: 0,
+            position: 'relative',
+
+        },
+        exit: {
+            opacity: 0,
+            position: 'relative',
+        }
+    },
+    transition: {
+        duration: 0.3
+    }
+};
+
 function HomeLayout(props: HomeProps) {
+    // states
     const [isLoaded, setLoaded] = useState(false);
     const router = useRouter();
-    const animation: AnimationTemplate = {
-        name: "fade in",
-        variants: {
-            initial: {
-                opacity: 0,
-                position: 'relative',
-            },
-            animate: {
-                opacity: 1,
-                x: 0,
-                position: 'relative',
-
-            },
-            exit: {
-                opacity: 0,
-                position: 'relative',
-            }
-        },
-        transition: {
-            duration: 0.3
-        }
-    };
-    const navOptions = props.navOptions;
+    // state functions
     useScript({src: '/js/home/patchy.js', checkForExisting: true,});
     useScript({src: '/js/home/main.js', checkForExisting: true,});
     useEffect(() => {
         setLoaded(true);
     }, []);
+    // misc
+    const navOptions = props.navOptions;
+
     if (!isLoaded) {
         return <></>;
     }

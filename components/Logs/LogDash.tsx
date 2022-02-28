@@ -7,6 +7,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import Link from "next/link";
+import { format } from 'date-fns'
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -51,8 +52,6 @@ function LogDash(props: LogProps) {
     // states
     const [pageIndex, setPageIndex] = useState(1);
     const [formValues, setFormValues] = useState(defaultValues)
-    const [logs, setLogs] = useState<any>(null);
-    const [count, setCount] = useState<any>(null);
     // state functions
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -66,17 +65,12 @@ function LogDash(props: LogProps) {
     let tempSd = formValues.startDate ? formValues.startDate.toISOString() : "";
     let tempEd = formValues.endDate ? formValues.endDate.toISOString() : "";
     let apiURL = `/api/anny/logs?p=${pageIndex}&u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
-    let apiCountURL = `/api/anny/logs_count?u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
-    useEffect(() => {
-        async function fetchData() {
-            let resLogs = await fetch(apiURL).then((r) => r.json());
-            let resCount = await fetch(apiCountURL).then((r) => r.json());
-            setLogs(resLogs);
-            setCount(resCount);
-        }
 
-        fetchData();
-    }, [apiURL, apiCountURL]);
+    const logs = useSWR(apiURL, fetcher).data;
+    let count;
+    if (logs) {
+        count = logs.pagination;
+    }
 
     // --------------------loading handling--------------------
     let logContent;
@@ -86,15 +80,21 @@ function LogDash(props: LogProps) {
     else {
         logContent = logs.data.map((item: any) =>
             <div key={item.msg_id} className="">
-                <div className="flex items-start flex-row overflow-x-hidden">
-                    <Text b color={(item.color != "#000000") ? item.color : "#BBBBBB"}>{item.user}</Text>: {item.message}
+                <div className="pt-[5px] pl-[20px] pr-[20px]">
+                    <div className="break-words">
+                        <span className="mr-[5px] text-[#adadb8]">{format(new Date(item.time), 'yyyy-MM-dd hh:mm')}</span>
+                        <span>{item.badges}</span>
+                        <span><Text b color={(item.color != "#000000") ? item.color : "#BBBBBB"}>{item.user}</Text></span>
+                        <span aria-hidden="true">: </span>
+                        <span className="">{item.message}</span>
+                    </div>
                 </div>
             </div>
         )
     }
     // pagination--------------------
     if (!count) paginationDiv = <Loading type="points-opacity" />;
-    else paginationDiv = <Pagination size={"lg"} total={Math.ceil(count.total / count.count)} initialPage={pageIndex} onChange={(page) => setPageIndex(page)} />;
+    else paginationDiv = <Pagination size={"lg"} total={Math.ceil(count.count / count.itemCount)} initialPage={pageIndex} onChange={(page) => setPageIndex(page)} />;
     // misc--------------------
     const fullForm = (
         <>
@@ -116,11 +116,6 @@ function LogDash(props: LogProps) {
                     onChange={(newDate) => setFormValues({ ...formValues, startDate: newDate })}
                 />
             </LocalizationProvider>
-            {/* <Link href="/logs" passHref>
-                <Button variant="outlined" color="secondary" size="large">
-                    Search
-                </Button>
-            </Link> */}
         </>
     )
 
@@ -147,7 +142,7 @@ function LogDash(props: LogProps) {
                         alignItems: 'center',
                     }}
                 >
-                    <Grid xs={6} sm={4}>
+                    <Grid xs={6} sm={4} item={true}>
                         <Box
                             component="form"
                             sx={{
@@ -181,7 +176,7 @@ function LogDash(props: LogProps) {
 
                         </Box>
                     </Grid>
-                    <Grid xs={4.5} sm={8} lg={8}>
+                    <Grid xs={4.5} sm={8} lg={8} item={true}>
                         <Box
                             sx={{
                                 overflow: 'auto',
