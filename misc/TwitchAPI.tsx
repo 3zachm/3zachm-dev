@@ -11,7 +11,6 @@ async function applyCache(key: string, url: string, cacheTime: number) {
         if (response.data) {
             await redis.set(key, JSON.stringify(response.data), "EX", cacheTime);
         }
-        console.log(response);
         return response.data;
     }
 }
@@ -38,7 +37,7 @@ async function fetchEndpoint(url: string) {
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
     else {
-        await redis.set("TWITCH.RATE_LIMIT", "1", "EX", 2);
+        await redis.set("TWITCH.RATE_LIMIT", "1", "EX", 1);
     }
     const auth = await authTwitch();
     const requestHeaders = new Headers();
@@ -54,14 +53,11 @@ async function fetchEndpoint(url: string) {
     return json;
 }
 
-async function getUserByName(username: string | undefined) {
-    if (!username) {
-        return;
-    }
+async function getUserByName(username: string) {
     return await applyCache("TWITCH.USER_" + username, `https://api.twitch.tv/helix/users?login=${username}`, 600);
 }
 
-async function getUserByID(userID: number) {
+async function getUserByID(userID: string) {
     return await applyCache("TWITCH.USER_" + userID, `https://api.twitch.tv/helix/users?id=${userID}`, 600);
 }
 
@@ -74,9 +70,14 @@ async function getGlobalBadges() {
     return await applyCache("TWITCH.GLOBAL_BADGES", `https://api.twitch.tv/helix/chat/badges/global`, 3600);
 }
 
+async function getVideos(userID: string) {
+    return await applyCache("TWITCH.VIDEOS_" + userID, `https://api.twitch.tv/helix/videos?user_id=${userID}?limit=100`, 360);
+}
+
 export {
     getUserByID,
     getUserByName,
     getChannelBadges,
     getGlobalBadges,
+    getVideos,
 }

@@ -8,7 +8,7 @@ type Data = {
     pagination?: any;
 }
 
-const secret = process.env.SECRET
+const secret = process.env.NEXTAUTH_SECRET
 const itemCount = (process.env.LOGS_PER_PAGE) ? parseInt(process.env.LOGS_PER_PAGE) : 1000
 
 export default async function handler(
@@ -25,7 +25,7 @@ export default async function handler(
     const search = req.query.q ? req.query.q as string : undefined;
     const startDate = req.query.sd ?  new Date(req.query.sd as string) as Date : new Date(0) as Date;
     const endDate = req.query.ed ?  new Date(req.query.ed as string) as Date : new Date() as Date;
-    console.log(`${page} ${username} ${search} ${startDate} ${endDate}`)
+
     let userResponse
     if (username) {
         userResponse = await getUserByName(username);

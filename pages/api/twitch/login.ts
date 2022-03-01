@@ -6,7 +6,7 @@ type Data = {
     [key: string]: any;
 }
 
-const secret = process.env.SECRET
+const secret = process.env.NEXTAUTH_SECRET
 
 export default async function handler(
     req: NextApiRequest,

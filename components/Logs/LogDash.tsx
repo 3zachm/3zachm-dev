@@ -7,7 +7,9 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import Link from "next/link";
-import { format } from 'date-fns'
+import { add, format, parseISO, sub } from 'date-fns'
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+import Image from 'next/image';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -66,27 +68,78 @@ function LogDash(props: LogProps) {
     let tempEd = formValues.endDate ? formValues.endDate.toISOString() : "";
     let apiURL = `/api/anny/logs?p=${pageIndex}&u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
     let apiCountURL = `/api/anny/logs_count?u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
+    let apiBadges = `/api/twitch/badges?c=56418014`;
+    let apiVideos = `/api/twitch/videos?c=56418014`;
 
     const logs = useSWR(apiURL, fetcher).data;
     const count = useSWR(apiCountURL, fetcher).data;
+    const allBadges = useSWR(apiBadges, fetcher).data;
+    const videos = useSWR(apiVideos, fetcher).data;
 
+    // badge handling
+    const parseBadges = (badges: string) => {
+        if (!badges) return [];
+        const badgeArray = badges.split(",");
+        let badgeImages: ReactJSXElement[] = [];
+        badgeArray.forEach((badge) => {
+            // span to hold the badge
+            let span = document.createElement("span");
+            span.className = "mr-[3px]";
+            let useSet = allBadges.global;
+            const badgeSplit = badge.split("/");
+            // if the badge is a channel badge
+            if (allBadges.channel.find((x: { set_id: string; }) => x.set_id == badgeSplit[0])) {
+                useSet = allBadges.channel;
+            }
+            badgeImages.push(
+                <span className={"mr-[3px] pt-[2px] inline-flex"} key={badgeSplit[0]}>
+                    <div>
+                        <Image alt={badgeSplit[0]} width={18} height={18} src=
+                            {useSet.find((x: { set_id: string; }) => x.set_id == badgeSplit[0]).versions.find((x: { id: string; }) => x.id == badgeSplit[1]).image_url_1x}
+                        />
+                    </div>
+                </span>
+            );
+        });
+        return badgeImages;
+    }
+
+    // why is this not working
+    async function handleVodRedir(e: any) {
+        e.preventDefault();
+        const chatTime = parseISO(e.target.outerText);
+        videos.data.forEach((video: any) => {
+            const startTime = parseISO(video.created_at);
+            const length = video.duration; // formatted like 03h20m00s
+            const end = add(startTime, { hours: length.split("h")[0], minutes: length.split("h")[1].split("m")[0], seconds: length.split("h")[1].split("m")[1].split("s")[0] });
+
+            if (chatTime >= startTime && chatTime <= end) {
+                const vodTime = chatTime.getTime() - startTime.getTime();
+                // convert vodTime to 00h00m00s
+                const hours = Math.floor(vodTime / 3600000);
+                const minutes = Math.floor((vodTime / 60000) % 60);
+                const seconds = Math.floor((vodTime / 1000) % 60);
+                const vodTimeFormatted = `${hours}h${minutes}m${seconds}s`;
+                window.open(`https://www.twitch.tv/videos/${video.id}?t=${vodTimeFormatted}`);
+            }
+        });
+    }
     // --------------------loading handling--------------------
     let logContent;
     let paginationDiv;
     // logs
-    if (!logs) logContent = <Loading type="points-opacity" />;
+    if (!logs || !allBadges) logContent = <div className="inline-flex"><Loading type="points-opacity" /></div>;
     else {
         logContent = logs.data.map((item: any) =>
-            <div key={item.msg_id} className="">
-                <div className="pt-[5px] pl-[20px] pr-[20px]">
-                    <div className="break-words">
-                        <span className="mr-[5px] text-[#adadb8]">{format(new Date(item.time), 'yyyy-MM-dd hh:mm')}</span>
-                        <span>{item.badges}</span>
-                        <span><Text b color={(item.color != "#000000") ? item.color : "#BBBBBB"}>{item.user}</Text></span>
-                        <span aria-hidden="true">: </span>
-                        <span className="">{item.message}</span>
-                    </div>
+            <div className="pt-[5px] pl-[20px] pr-[20px] flex flex-row items-start" key={item.msg_id}>
+                <div className="flex sm:inline-flex items-center w-fit">
+                    <span className="mr-[10px] text-[#adadb8] whitespace-nowrap sm:block hidden" onClick={handleVodRedir}>{format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')}</span>
+                    <span className="mr-[10px] text-[#adadb8] whitespace-nowrap block sm:hidden">{format(new Date(item.time), 'hh:mm')}</span>
+                    <span className="h-[20px] w-fit">{parseBadges(item.badges).map((x: any) => x)}</span>
+                    <span style={{ color: `${(item.color != "#000000") ? item.color : "#BBBBBB"}`, fontWeight: "bold" }}>{item.user}</span>
+                    <span aria-hidden="true">: </span>
                 </div>
+                <div className="inline-flex max-w-[60%] ml-1">{item.message}</div>
             </div>
         )
     }
@@ -174,7 +227,7 @@ function LogDash(props: LogProps) {
 
                         </Box>
                     </Grid>
-                    <Grid xs={4.5} sm={8} lg={8} item={true}>
+                    <Grid xs={10} sm={8} lg={8} item={true}>
                         <Box
                             sx={{
                                 overflow: 'auto',
