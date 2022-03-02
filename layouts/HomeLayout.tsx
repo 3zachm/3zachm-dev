@@ -39,8 +39,8 @@ function HomeLayout(props: HomeProps) {
     const [isLoaded, setLoaded] = useState(false);
     const router = useRouter();
     // state functions
-    useScript({src: '/js/home/patchy.js', checkForExisting: true,});
-    useScript({src: '/js/home/main.js', checkForExisting: true,});
+    useScript({src: '/js/home/patchy.js', checkForExisting: false,});
+    useScript({src: '/js/home/main.js', checkForExisting: false,});
     useEffect(() => {
         setLoaded(true);
     }, []);

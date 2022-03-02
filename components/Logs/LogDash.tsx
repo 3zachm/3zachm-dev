@@ -107,7 +107,7 @@ function LogDash(props: LogProps) {
     // why is this not working
     async function handleVodRedir(e: any) {
         e.preventDefault();
-        const chatTime = parseISO(e.target.outerText);
+        const chatTime = parseISO(e.target.dataset.chattime);
         videos.data.forEach((video: any) => {
             const startTime = parseISO(video.created_at);
             const length = video.duration; // formatted like 03h20m00s
@@ -128,18 +128,33 @@ function LogDash(props: LogProps) {
     let logContent;
     let paginationDiv;
     // logs
-    if (!logs || !allBadges) logContent = <div className="inline-flex"><Loading type="points-opacity" /></div>;
+    if (!logs || !allBadges) {
+        const item = {
+            msg_id: "0",
+            message : "Loading",
+            time: Date.now(),
+        }
+        logContent = (
+            <div className="pt-[5px] pl-[20px] pr-[20px] flex flex-row items-start min-w-[80vw] overflow-hidden" key={item.msg_id}>
+                <div className="inline-flex max-w-[60%] ml-1"><Loading type="points-opacity" /></div>
+            </div>
+        );
+    }
     else {
         logContent = logs.data.map((item: any) =>
-            <div className="pt-[5px] pl-[20px] pr-[20px] flex flex-row items-start" key={item.msg_id}>
-                <div className="flex sm:inline-flex items-center w-fit">
-                    <span className="mr-[10px] text-[#adadb8] whitespace-nowrap sm:block hidden" onClick={handleVodRedir}>{format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')}</span>
-                    <span className="mr-[10px] text-[#adadb8] whitespace-nowrap block sm:hidden">{format(new Date(item.time), 'hh:mm')}</span>
-                    <span className="h-[20px] w-fit">{parseBadges(item.badges).map((x: any) => x)}</span>
-                    <span style={{ color: `${(item.color != "#000000") ? item.color : "#BBBBBB"}`, fontWeight: "bold" }}>{item.user}</span>
-                    <span aria-hidden="true">: </span>
+            <div key={item.msg_id}>
+                <div className="pt-[5px] flex flex-row items-start">
+                    <div className="flex sm:inline-flex items-center w-fit">
+                        <span className="mr-[8px] text-[#adadb8] whitespace-nowrap sm:block hidden" data-chattime={format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')} onClick={handleVodRedir}>{format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')}</span>
+                        <span className="mr-[8px] text-[#adadb8] whitespace-nowrap block sm:hidden" data-chattime={format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')} onClick={handleVodRedir}>{format(new Date(item.time), 'hh:mm')}</span>
+                        <span className="h-[20px] w-fit">{parseBadges(item.badges).map((x: any) => x)}</span>
+                        <span style={{ color: `${(item.color != "#000000") ? item.color : "#BBBBBB"}`, fontWeight: "bold" }}>{item.user}</span>
+                        <span aria-hidden="true">: </span>
+                    </div>
+                    <div className="sm:inline-flex hidden max-w-[60%] ml-1">{item.message}</div>
                 </div>
-                <div className="inline-flex max-w-[60%] ml-1">{item.message}</div>
+                <div className="inline-flex sm:hidden max-w-[80%]">{item.message}</div>
+                <Divider className="sm:hidden block mt-2" />
             </div>
         )
     }
@@ -183,7 +198,7 @@ function LogDash(props: LogProps) {
                     </div>
                 </Collapse>
             </div>
-            <div className="flex justify-center flex-col pointer-events-auto pt-7">
+            <div className="flex justify-center flex-col pointer-events-auto pt-7 max-w-[100vw]">
                 <Grid
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -193,7 +208,7 @@ function LogDash(props: LogProps) {
                         alignItems: 'center',
                     }}
                 >
-                    <Grid xs={6} sm={4} item={true}>
+                    <Grid xs={6} sm={9} item={true}>
                         <Box
                             component="form"
                             sx={{
@@ -233,8 +248,8 @@ function LogDash(props: LogProps) {
                                 overflow: 'auto',
                                 padding: '3rem',
                             }}
-                            className="shadow-lg backdrop-blur bg-opacity-70 bg-zinc-900 lg:ml-12 lg:mt-20 lg:mb-4 lg:mr-12 md:max-h-[75vh] max-h-[70vh] md:min-h-[75vh] min-h-[70vh] min-w-[60vw]">
-                            <div>
+                            className="shadow-lg backdrop-blur bg-opacity-70 bg-zinc-900 lg:ml-12 lg:mt-20 lg:mb-4 lg:mr-12 lg:max-h-[75vh] max-h-[70vh] lg:min-h-[75vh] min-h-[70vh] min-w-[60vw]">
+                            <div className="overflow-hidden">
                                 {logContent}
                             </div>
                         </Box>

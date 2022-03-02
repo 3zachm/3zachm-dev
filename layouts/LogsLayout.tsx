@@ -1,5 +1,4 @@
 import Navbar from '../components/Logs/Navbar';
-import useScript from '../hooks/useScript';
 import { useRouter } from 'next/router';
 import { AnimatePresence, domAnimation, LazyMotion, m, Transition, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
