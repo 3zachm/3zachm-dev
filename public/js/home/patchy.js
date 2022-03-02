@@ -560,6 +560,7 @@ function spawn_patchy() {
 }
 
 async function startPatchy(sheet) {
+    const patchyStart = true;
     if (sheet != null) {
         PATCHYSHEET = sheet;
     }
@@ -662,3 +663,9 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+// create element on dom to signal that the page is loaded
+const loaded = document.createElement("div");
+loaded.id = "loadedPatchy";
+loaded.style.display = "none";
+document.body.appendChild(loaded);

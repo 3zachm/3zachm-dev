@@ -1,4 +1,4 @@
-document.body.onload = function () { onLoad() };
+waitForElementToDisplay("#loadedPatchy", () => onLoad(), 1000, 9000);
 // if not defined
 if (typeof (patchySpawner) == "undefined") {
     let patchySpawner = [];
@@ -26,4 +26,31 @@ async function onLoad() {
 
 
     await startPatchy();
+    await check_patchy();
+}
+
+function waitForElementToDisplay(selector, callback, checkFrequencyInMs, timeoutInMs) {
+    var startTimeInMs = Date.now();
+    (function loopSearch() {
+        if (document.querySelector(selector) != null) {
+            callback();
+            return;
+        }
+        else {
+            setTimeout(function () {
+                if (timeoutInMs && Date.now() - startTimeInMs > timeoutInMs)
+                    return;
+                loopSearch();
+            }, checkFrequencyInMs);
+        }
+    })();
+}
+
+async function check_patchy() {
+    await new Promise(r => setTimeout(r, 2000));
+    if (!patchyStart) {
+        await startPatchy();
+        setTimeout(() => { check_patchy() }, 2000);
+    }
+    return;
 }
