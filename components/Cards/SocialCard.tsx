@@ -104,21 +104,21 @@ function SocialCard() {
                         <m.div initial="initial" animate="animate" variants={containerAnimation}>
                             <Row justify="space-between">
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#00b5d900' }}>
+                                    <Button flat auto rounded css={{ color: '#fff', bg: '#00b5d900' }} className="p-0 pr-1 pl-1">
                                         <Link className="text-white" href="https://twitter.com/3zachm">
                                             <Image src='/img/icons/twitter.png' alt='twitter' width="48px" height="48px"></Image>
                                         </Link>
                                     </Button>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#d90e0000' }}>
+                                    <Button flat auto rounded css={{ color: '#fff', bg: '#d90e0000' }} className="p-0 pr-1 pl-1">
                                         <Link className="text-white" href="https://youtube.com/3zachm">
                                             <Image src='/img/icons/youtube.png' alt='youtube' width="48px" height="48px"></Image>
                                         </Link>
                                     </Button>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#7e00d900' }}>
+                                    <Button flat auto rounded css={{ color: '#fff', bg: '#7e00d900' }} className="p-0 pr-1 pl-1">
                                         <Link className="text-white" href="https://twitch.tv/3zachm">
                                             <Image src='/img/icons/twitch.png' alt='twitch' width="40px" height="40px"></Image>
                                         </Link>
@@ -126,20 +126,20 @@ function SocialCard() {
                                 </m.div>
                                 <m.div variants={itemAnimation}>
                                     <Tooltip content={'Copied!'} trigger="click" color="default">
-                                        <Button flat auto rounded css={{ color: '#fff', bg: '#5865F200' }} onClick={copyButtonHandler}>
+                                        <Button flat auto rounded css={{ color: '#fff', bg: '#5865F200' }} onClick={copyButtonHandler} className="p-0 pr-1 pl-1">
                                             <Image src='/img/icons/discord2.png' alt='discord' width="48px" height="48px"></Image>
                                         </Button>
                                     </Tooltip>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#ff66aa00' }}>
+                                    <Button flat auto rounded css={{ color: '#fff', bg: '#ff66aa00' }} className="p-0 pr-1 pl-1">
                                         <Link className="text-white" href="https://osu.ppy.sh/users/8630110">
                                             <Image src='/img/icons/osu.png' alt='osu' width="46px" height="46px"></Image>
                                         </Link>
                                     </Button>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#00000000' }}>
+                                    <Button flat auto rounded css={{ color: '#fff', bg: '#00000000' }} className="p-0 pr-1 pl-1">
                                         <Link className="text-white" href="https://steamcommunity.com/id/3zachm/">
                                             <Image src='/img/icons/steam.png' alt='steam' width="40px" height="40px"></Image>
                                         </Link>
