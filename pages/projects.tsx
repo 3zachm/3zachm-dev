@@ -1,4 +1,4 @@
-import { Grid, Row, Col, Button, Text, Link as CardLink } from '@nextui-org/react'
+import { Grid, Row, Col, Button, Text, Link as CardLink, Tooltip } from '@nextui-org/react'
 import Link from 'next/link'
 import type { ReactElement } from 'react'
 import ProjectCard from '../components/Cards/ProjectCard'
@@ -36,7 +36,7 @@ function Projects() {
 											</Button>
 											<Button flat auto rounded color="secondary">
 												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='/asayake' passHref>
+													<Link href='https://discord.com/api/oauth2/authorize?client_id=907538185976946720&permissions=268438528&scope=applications.commands%20bot' passHref>
 														<CardLink block color="secondary">Invite</CardLink>
 													</Link>
 												</Text>
@@ -55,19 +55,22 @@ function Projects() {
 									</Col>
 									<Col>
 										<Row justify="flex-end">
-											<Button flat auto rounded color="secondary">
-												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='/discord' passHref>
-														<CardLink block color="secondary">Link</CardLink>
-													</Link>
-												</Text>
-											</Button>
+											<Tooltip content={'Not yet ported :('} trigger="hover">
+												<Button flat auto rounded disabled color="secondary">
+													<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
+														Link
+														{/* <Link href='/discord' passHref>
+															<CardLink block color="secondary">Link</CardLink>
+														</Link> */}
+													</Text>
+												</Button>
+											</Tooltip>
 										</Row>
 									</Col>
 								</Row>
 							</>} />
 					</Grid>
-					<Grid className="w-[100%] mb-20">
+					{/* <Grid className="w-[100%] mb-20">
 						<ProjectCard image='/img/proj/ranks.webp' bgBlur='#000000' borderTop='$borderWeights$light solid rgba(255, 255, 255, 0.2)' content={
 							<>
 								<Row>
@@ -87,7 +90,7 @@ function Projects() {
 									</Col>
 								</Row>
 							</>} />
-					</Grid>
+					</Grid> */}
 					<Grid className="w-[100%] mb-20">
 						<ProjectCard image='/img/proj/youmu.webp' bgBlur='#000000' borderTop='$borderWeights$light solid rgba(255, 255, 255, 0.2)' content={
 							<>
@@ -99,8 +102,8 @@ function Projects() {
 										<Row justify="flex-end">
 											<Button flat auto rounded color="secondary">
 												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='/youmu' passHref>
-														<CardLink block color="secondary">Invite</CardLink>
+													<Link href='https://github.com/3zachm/recursive-reminders' passHref>
+														<CardLink block color="secondary">Source</CardLink>
 													</Link>
 												</Text>
 											</Button>
