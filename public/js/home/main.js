@@ -26,7 +26,7 @@ async function onLoad() {
 
 
     await startPatchy();
-    await check_patchy();
+    // await check_patchy();
 }
 
 function waitForElementToDisplay(selector, callback, checkFrequencyInMs, timeoutInMs) {
@@ -46,11 +46,11 @@ function waitForElementToDisplay(selector, callback, checkFrequencyInMs, timeout
     })();
 }
 
-async function check_patchy() {
-    await new Promise(r => setTimeout(r, 2000));
-    if (!patchyStart) {
-        await startPatchy();
-        setTimeout(() => { check_patchy() }, 2000);
-    }
-    return;
-}
+// async function check_patchy() {
+//     await new Promise(r => setTimeout(r, 2000));
+//     if (!patchyStart) {
+//         await startPatchy();
+//         setTimeout(() => { check_patchy() }, 2000);
+//     }
+//     return;
+// }
