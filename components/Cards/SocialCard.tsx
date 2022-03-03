@@ -56,12 +56,6 @@ const itemAnimation: Variants = {
 }
 
 function SocialCard() {
-    const copyButtonHandler: MouseEventHandler = (e) => {
-        e.preventDefault();
-        navigator.clipboard.writeText(
-            e.currentTarget.innerHTML
-        );
-    }
     return (
         <Card cover shadow className='select-none relative md:min-w-[540px] min-h-[400px] md:max-w-[35vw]'>
             <Card.Body className="overflow-hidden">
@@ -126,7 +120,10 @@ function SocialCard() {
                                 </m.div>
                                 <m.div variants={itemAnimation}>
                                     <Tooltip content={'Copied!'} trigger="click" color="default">
-                                        <Button flat auto rounded css={{ color: '#fff', bg: '#5865F200' }} onClick={copyButtonHandler} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
+                                        <Button flat auto rounded css={{ color: '#fff', bg: '#5865F200' }} onClick={(e) => {
+                                            e.preventDefault();
+                                            navigator.clipboard.writeText('3zachm#9999');
+                                        }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
                                             <Image src='/img/icons/discord2.png' alt='discord' width="48px" height="48px"></Image>
                                         </Button>
                                     </Tooltip>
