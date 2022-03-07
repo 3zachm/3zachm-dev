@@ -10,6 +10,7 @@ import Link from "next/link";
 import { add, format, parseISO, sub } from 'date-fns'
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import Image from 'next/image';
+import CountUp from "react-countup";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -104,7 +105,6 @@ function LogDash(props: LogProps) {
         return badgeImages;
     }
 
-    // why is this not working
     async function handleVodRedir(e: any) {
         e.preventDefault();
         const chatTime = parseISO(e.target.dataset.chattime);
@@ -127,6 +127,7 @@ function LogDash(props: LogProps) {
     // --------------------loading handling--------------------
     let logContent;
     let paginationDiv;
+    let msgCount;
     // logs
     if (!logs || !allBadges) {
         const item = {
@@ -162,6 +163,8 @@ function LogDash(props: LogProps) {
     if (!count) paginationDiv = <Loading type="points-opacity" />;
     else paginationDiv = <Pagination size={"lg"} total={Math.ceil(count.total / count.count)} initialPage={pageIndex} onChange={(page) => setPageIndex(page)} />;
     // misc--------------------
+    if (!count || !logs) msgCount = <> Total Messages <Loading className="pt-3" type="points-opacity" /></>;
+    else msgCount = <>Total Messages <Text color="pink"><CountUp end={count.total} separator="," duration={2.0} /></Text></>
     const fullForm = (
         <>
             <CssTextField name="username" label="Username" value={formValues.username} onChange={handleInputChange} type="search" />
@@ -182,6 +185,7 @@ function LogDash(props: LogProps) {
                     onChange={(newDate) => setFormValues({ ...formValues, startDate: newDate })}
                 />
             </LocalizationProvider>
+            { msgCount }
         </>
     )
 
