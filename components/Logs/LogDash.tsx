@@ -163,8 +163,8 @@ function LogDash(props: LogProps) {
     if (!count) paginationDiv = <Loading type="points-opacity" />;
     else paginationDiv = <Pagination size={"lg"} total={Math.ceil(count.total / count.count)} initialPage={pageIndex} onChange={(page) => setPageIndex(page)} />;
     // misc--------------------
-    if (!count || !logs) msgCount = <> Total Messages <Loading className="pt-3" type="points-opacity" /></>;
-    else msgCount = <>Total Messages <Text color="pink"><CountUp end={count.total} separator="," duration={2.0} /></Text></>
+    if (!count || !logs) msgCount = <> Messages <Loading className="pt-3" type="points-opacity" /></>;
+    else msgCount = <>Messages <span style={{color: "pink"}}><CountUp end={count.total} separator="," duration={2.0} /></span></>
     const fullForm = (
         <>
             <CssTextField name="username" label="Username" value={formValues.username} onChange={handleInputChange} type="search" />
@@ -185,7 +185,7 @@ function LogDash(props: LogProps) {
                     onChange={(newDate) => setFormValues({ ...formValues, startDate: newDate })}
                 />
             </LocalizationProvider>
-            { msgCount }
+            <div className="sm:pt-0 pt-3 flex justify-center items-center flex-col">{ msgCount }</div>
         </>
     )
 
