@@ -19,9 +19,9 @@ function getRadianAngle(degreeValue: number) {
 }
 
 export default async function getCroppedImg(imageSrc: any, pixelCrop: { width: number; height: number; x: number; y: number; }, rotation = 0) {
- const image = await createImage(imageSrc);
+ const image: HTMLImageElement = await createImage(imageSrc) as HTMLImageElement;
  const canvas = document.createElement("canvas");
- const ctx = canvas.getContext("2d");
+ const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
  const maxSize = Math.max(image.width, image.height);
  const safeArea = 2 * ((maxSize / 2) * Math.sqrt(2));
@@ -70,11 +70,11 @@ export const generateDownload = async (imageSrc: any, crop: any) => {
 
  canvas.toBlob(
      (blob) => {
-         const previewUrl = window.URL.createObjectURL(blob);
+         const previewUrl = window.URL.createObjectURL(blob as Blob);
 
          const anchor = document.createElement("a");
          anchor.download = "image.jpeg";
-         anchor.href = URL.createObjectURL(blob);
+         anchor.href = URL.createObjectURL(blob as Blob);
          anchor.click();
 
          window.URL.revokeObjectURL(previewUrl);
