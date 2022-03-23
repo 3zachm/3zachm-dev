@@ -34,6 +34,11 @@ const itemAnimation: Variants = {
 function Misc() {
 	const list = [
 		{
+			title: 'Discord Previewer',
+			img: '/img/misc/preview.webp',
+			url: '/discord',
+		},
+		{
 			title: 'YEP Counter',
 			img: '/img/misc/yepthumb.webp',
 			url: '/yep',

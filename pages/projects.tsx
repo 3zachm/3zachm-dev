@@ -55,16 +55,13 @@ function Projects() {
 									</Col>
 									<Col>
 										<Row justify="flex-end">
-											<Tooltip content={'Not yet ported :('} trigger="hover">
-												<Button flat auto rounded disabled color="secondary">
-													<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-														Link
-														{/* <Link href='/discord' passHref>
-															<CardLink block color="secondary">Link</CardLink>
-														</Link> */}
-													</Text>
-												</Button>
-											</Tooltip>
+											<Button flat auto rounded color="secondary">
+												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
+													<Link href='/discord' passHref>
+														<CardLink block color="secondary">Link</CardLink>
+													</Link>
+												</Text>
+											</Button>
 										</Row>
 									</Col>
 								</Row>
