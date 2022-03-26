@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { AnimatePresence, domAnimation, LazyMotion, m, Transition, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { AnimationTemplate } from '../types/Animation';
+import { logMain } from './NavTemplates';
 
 interface LogsProps {
     children: React.ReactNode;
@@ -35,7 +36,7 @@ function LogsLayout(props: LogsProps) {
     };
     return (
         <>
-            <Navbar options={[]}/>
+            <Navbar options={logMain} />
             <LazyMotion features={domAnimation}>
                 <AnimatePresence exitBeforeEnter>
                     <m.div key={router.route.concat(animation.name)}
