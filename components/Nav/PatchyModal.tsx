@@ -1,4 +1,5 @@
 import { Box, Modal } from "@mui/material";
+import { m } from "framer-motion";
 import { useState } from "react";
 
 const style = {
@@ -20,7 +21,26 @@ function PatchyModal() {
     const handleClose = () => setOpen(false);
     return (
         <>
-            <a onClick={handleOpen} className="text-white md:pl-5 md:pr-5 relative select-none pointer-events-auto pl-3 pr-3">Patchouli?</a>
+            <m.a
+                onClick={handleOpen}
+                whileHover={{
+                    scale: 1.05,
+                    textShadow: "0px 0px 10px rgb(253 224 71)",
+                    transition: {
+                        duration: 0.2
+                    }
+                }}
+                whileTap={{
+                    scale: 0.95,
+                    textShadow: "0px 0px 10px #fff",
+                    transition: {
+                        duration: 0.2
+                    }
+                }}
+                className="text-white md:pl-5 md:pr-5 relative select-none pointer-events-auto pl-3 pr-3"
+            >
+                Patchouli?
+            </m.a>
             <Modal
                 open={open}
                 onClose={handleClose}

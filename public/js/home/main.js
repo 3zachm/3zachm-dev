@@ -8,7 +8,7 @@ async function onLoad() {
     let aTags = document.getElementsByTagName("a");
     patchySpawner = [];
     for (var i = 0; i < aTags.length; i++) {
-        if (aTags[i].innerHTML == "Patchouli?") {
+        if (aTags[i].id == "patchouli-thing") {
             patchySpawner.push(aTags[i]);
         }
     }

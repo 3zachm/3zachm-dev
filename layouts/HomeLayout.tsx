@@ -52,7 +52,20 @@ function HomeLayout(props: HomeProps) {
     }
     return (
         <>
-            <Navbar options={navOptions} />
+            <LazyMotion features={domAnimation}>
+                <AnimatePresence exitBeforeEnter>
+                    <Navbar options={navOptions} />
+                </AnimatePresence>
+            </LazyMotion>
+            <div
+                className="w-screen h-screen fixed top-0 left-0"
+                style={{
+                    backgroundImage: 'url("/img/14687.png")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'bottom center',
+                    backgroundRepeat: 'no-repeat',
+                }}
+            />
             <canvas width="900" height="500" id="main-bg" className="fixed"></canvas>
 
             <LazyMotion features={domAnimation}>
