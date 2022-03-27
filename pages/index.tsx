@@ -22,9 +22,9 @@ function Home() {
 		<>
 			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
 			<div
-				className="p-5 flex flex-col items-center justify-center select-none relative md:min-w-[540px] min-h-[250px] md:max-w-[40vw] backdrop-blur bg-opacity-70 bg-zinc-900 rounded-3xl overflow-hidden"
+				className="p-5 flex flex-col items-center justify-center select-none relative md:min-w-[525px] min-h-[250px] md:max-w-[40vw] backdrop-blur bg-opacity-70 bg-zinc-900 rounded-3xl overflow-hidden"
 			>
-				<div className="absolute top-0 -right-[100px] -z-[1] min-w-full min-h-[800px]">
+				<div className="absolute top-0 -right-[100px] -z-[1] min-w-full min-h-[800px] md:opacity-100 opacity-60">
 					<div
 						style={{
 							backgroundImage: `url(/img/danbooru_1369604.png)`,
