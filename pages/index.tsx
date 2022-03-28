@@ -7,6 +7,73 @@ import { RiMoonFill } from 'react-icons/ri'
 import Image from 'next/image';
 import { AiOutlineClose } from 'react-icons/ai';
 import { m } from 'framer-motion';
+import { AnimationTemplate } from '../types/Animation';
+
+const containerAnimation: AnimationTemplate = {
+	name: "pop up",
+	variants: {
+		initial: {
+			opacity: 0,
+			y: -100,
+			position: 'relative',
+		},
+		animate: {
+			opacity: 1,
+			y: 0,
+			position: 'relative',
+			transition: {
+				delayChildren: 1.5,
+				staggerChildren: 0.1,
+				duration: 1.5,
+				type: "spring",
+				stiffness: 100,
+			}
+		},
+		exit: {
+			opacity: 0,
+			y: -100,
+			position: 'relative',
+			transition : {
+				duration : 0.3
+			}
+		}
+	},
+	transition: {
+		duration: 1.5,
+		type: "spring",
+		stiffness: 100,
+	}
+}
+
+const patchyChildAnimation: AnimationTemplate = {
+	name: "patchy",
+	variants: {
+		initial: {
+			opacity: 1,
+			y: 50,
+			position: 'relative',
+		},
+		animate: {
+			opacity: 1,
+			y: 0,
+			position: 'relative',
+		},
+		exit: {
+			opacity: 0,
+			y: 50,
+			position: 'relative',
+			transition : {
+				duration : 0.3
+			}
+		}
+	},
+	transition: {
+		delay: 0.25,
+		duration: 2,
+		type: "spring",
+		stiffness: 200,
+	}
+}
 
 function Home() {
 	const [show, setShow] = useState(true)
@@ -21,11 +88,21 @@ function Home() {
 	return (
 		<>
 			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
-			<div
+			<m.div
 				className="p-5 flex flex-col items-center justify-center select-none relative md:min-w-[525px] min-h-[250px] md:max-w-[40vw] backdrop-blur bg-opacity-70 bg-zinc-900 rounded-3xl overflow-hidden"
+				initial = "initial"
+				animate = "animate"
+				exit = "exit"
+				transition = { containerAnimation.transition }
+				variants = { containerAnimation.variants }
 			>
 				<div className="absolute top-0 -right-[100px] -z-[1] min-w-full min-h-[800px] md:opacity-100 opacity-60">
-					<div
+					<m.div
+						initial = "initial"
+						animate = "animate"
+						exit = "exit"
+						transition = { patchyChildAnimation.transition }
+						variants = { patchyChildAnimation.variants }
 						style={{
 							backgroundImage: `url(/img/danbooru_1369604.png)`,
 							backgroundSize: '240px',
@@ -44,10 +121,10 @@ function Home() {
 
 						className="cursor-pointer pointer-events-auto"
 					>
-						<a id="patchouli-thing"><RiMoonFill className="text-xl ml-1 text-yellow-300" /></a>
+						<a id="patchouli-thing"><RiMoonFill className="text-xl ml-1 text-yellow-300 pointer-events-none" /></a>
 					</m.div>
 				</div>
-			</div>
+			</m.div>
 			<div onClick={() => setShow(false)} className="text-zinc-400 absolute bottom-2 left-5 flex flex-row pointer-events-auto cursor-pointer items-center">
 				<AiOutlineClose size="14px" className="mr-1" /><p className="text-sm"> click here to close text-box if you&apos;re only here for the patchys </p>
 			</div>

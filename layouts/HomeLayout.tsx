@@ -5,6 +5,7 @@ import { AnimatePresence, domAnimation, LazyMotion, m, Transition, Variants } fr
 import { useEffect, useState } from 'react';
 import { NavTemplate } from '../layouts/NavTemplates';
 import { AnimationTemplate } from '../types/Animation';
+import Knowledge from '../components/Knowledge';
 
 interface HomeProps {
     navOptions: NavTemplate[];
@@ -39,8 +40,6 @@ function HomeLayout(props: HomeProps) {
     const [isLoaded, setLoaded] = useState(false);
     const router = useRouter();
     // state functions
-    useScript({src: '/js/home/patchy.js', checkForExisting: false,});
-    useScript({src: '/js/home/main.js', checkForExisting: false,});
     useEffect(() => {
         setLoaded(true);
     }, []);
@@ -66,7 +65,9 @@ function HomeLayout(props: HomeProps) {
                     backgroundRepeat: 'no-repeat',
                 }}
             />
-            <canvas width="900" height="500" id="main-bg" className="fixed"></canvas>
+            <Knowledge>
+                <canvas width="1700" height="500" id="patchy-main" className="fixed" />
+            </Knowledge>
 
             <LazyMotion features={domAnimation}>
                 <AnimatePresence exitBeforeEnter>

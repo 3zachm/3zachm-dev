@@ -20,8 +20,8 @@ function Navbar({ options }: NavProps) {
                     </React.Fragment>
                 ))}
             </div>
-            <div className="sm:hidden w-screen bg-zinc-900 backdrop-blur bg-opacity-70 pointer-events-auto absolute z-10">
-                <Collapse title="3zachm.dev" className='pl-5 pr-5 flex flex-col pointer-events-auto'>
+            <div className="sm:hidden w-screen backdrop-blur bg-opacity-50 bg-zinc-900 pointer-events-auto absolute z-10 flex items-center justify-center h-[7vh]">
+                <div className='pl-5 pr-5 flex flex-col pointer-events-auto'>
                     <div className="max-w-screen-sm p-0 flex items-center justify-center">
                         {navList.map((nav, index) => (
                             <React.Fragment key={index}>
@@ -29,7 +29,7 @@ function Navbar({ options }: NavProps) {
                             </React.Fragment>
                         ))}
                     </div>
-                </Collapse>
+                </div>
             </div>
         </>
     )
