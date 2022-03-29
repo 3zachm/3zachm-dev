@@ -1,7 +1,7 @@
 interface AnimationTemplate {
     name: string;
     variants: Variants;
-    transition: Transition;
+    transition?: Transition;
 }
 
 export {

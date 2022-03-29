@@ -18,12 +18,16 @@ const containerAnimation: AnimationTemplate = {
 			position: 'relative',
 		},
 		animate: {
+			width: ['325px', '525px'],
+			borderRadius: ['1000px', '24px', '24px', '24px'],
+			scale: [0.8, 1.03, 1],
 			opacity: 1,
 			y: 0,
 			position: 'relative',
 			transition: {
+				delay: 0.8,
 				delayChildren: 1.5,
-				staggerChildren: 0.1,
+				staggerChildren: 0.5,
 				duration: 1.5,
 				type: "spring",
 				stiffness: 100,
@@ -45,6 +49,38 @@ const containerAnimation: AnimationTemplate = {
 	}
 }
 
+const textChildAnimation: AnimationTemplate = {
+	name: "text child",
+	variants: {
+		initial: {
+			opacity: 0,
+			y: 20,
+			position: 'relative',
+		},
+		animate: {
+			scale: [0.8, 1],
+			opacity: 1,
+			y: 0,
+			position: 'relative',
+			transition: {
+				delay: 1.2
+			}
+		},
+		exit: {
+			opacity: 0,
+			y: -100,
+			position: 'relative',
+			transition : {
+				duration : 0.3
+			}
+		}
+	},
+	transition: {
+		duration: 2,
+		ease: "easeInOut"
+	}
+}
+
 const patchyChildAnimation: AnimationTemplate = {
 	name: "patchy",
 	variants: {
@@ -54,6 +90,7 @@ const patchyChildAnimation: AnimationTemplate = {
 			position: 'relative',
 		},
 		animate: {
+			scale: [1.06, 1],
 			opacity: 1,
 			y: 0,
 			position: 'relative',
@@ -68,10 +105,10 @@ const patchyChildAnimation: AnimationTemplate = {
 		}
 	},
 	transition: {
-		delay: 0.25,
+		delay: 1,
 		duration: 2,
 		type: "spring",
-		stiffness: 200,
+		stiffness: 100,
 	}
 }
 
@@ -89,7 +126,7 @@ function Home() {
 		<>
 			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
 			<m.div
-				className="p-5 flex flex-col items-center justify-center select-none relative md:min-w-[525px] min-h-[250px] md:max-w-[40vw] backdrop-blur bg-opacity-70 bg-zinc-900 rounded-3xl overflow-hidden"
+				className="p-5 flex flex-col items-center justify-center select-none relative min-h-[250px] lg:max-w-[40vw] backdrop-blur bg-opacity-70 bg-zinc-900 rounded-3xl overflow-hidden"
 				initial = "initial"
 				animate = "animate"
 				exit = "exit"
@@ -112,12 +149,35 @@ function Home() {
 						}}
 					/>
 				</div>
-				<Text className="text-5xl font-Manrope text-white m-4">hello!!!</Text>
+				<m.h1
+					className="text-5xl font-Manrope text-white m-4"
+					initial = "initial"
+					animate = "animate"
+					exit = "exit"
+					transition = { textChildAnimation.transition }
+					variants = { textChildAnimation.variants }
+				>
+					hello!!!
+				</m.h1>
 				<div className="flex-row flex items-center">
-					<p className="text-xl"> i&apos;m zach, ur average 東方 cs dev </p>
+					<m.p
+						className="text-xl"
+						initial = "initial"
+						animate = "animate"
+						exit = "exit"
+						transition = { textChildAnimation.transition }
+						variants = { textChildAnimation.variants }
+					>
+						i&apos;m zach, ur average 東方 cs dev
+					</m.p>
 					<m.div
 						whileHover={{ scale: 1.1, filter: "drop-shadow(0px 0px 8px rgb(253 224 71))" }}
 						whileTap={{ scale: 0.8 }}
+						initial="initial"
+						animate="animate"
+						exit="exit"
+						transition={ textChildAnimation.transition }
+						variants={ textChildAnimation.variants }
 
 						className="cursor-pointer pointer-events-auto"
 					>
