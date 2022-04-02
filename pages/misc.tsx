@@ -39,6 +39,11 @@ function Misc() {
 			url: '/discord',
 		},
 		{
+			title: 'asayake',
+			img: '/img/misc/asa.webp',
+			url: '/asayake',
+		},
+		{
 			title: 'YEP Counter',
 			img: '/img/misc/yepthumb.webp',
 			url: '/yep',

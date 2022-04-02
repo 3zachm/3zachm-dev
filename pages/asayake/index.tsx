@@ -164,6 +164,7 @@ function Asayake() {
                     backgroundImage: `url(/img/wp5179470.webp)`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center top',
+                    backgroundSize: 'cover',
                 }}
             />
             <m.div

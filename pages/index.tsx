@@ -30,7 +30,7 @@ const containerAnimation: AnimationTemplate = {
 				staggerChildren: 0.5,
 				duration: 1.5,
 				type: "spring",
-				stiffness: 100,
+				stiffness: 40,
 			}
 		},
 		exit: {
@@ -106,9 +106,7 @@ const patchyChildAnimation: AnimationTemplate = {
 	},
 	transition: {
 		delay: 1,
-		duration: 2,
-		type: "spring",
-		stiffness: 100,
+		duration: 1.3,
 	}
 }
 
