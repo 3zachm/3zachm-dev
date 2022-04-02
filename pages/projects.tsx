@@ -36,7 +36,7 @@ function Projects() {
 											</Button>
 											<Button flat auto rounded color="secondary">
 												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='https://discord.com/api/oauth2/authorize?client_id=907538185976946720&permissions=268438528&scope=applications.commands%20bot' passHref>
+													<Link href='/asayake' passHref>
 														<CardLink block color="secondary">Invite</CardLink>
 													</Link>
 												</Text>

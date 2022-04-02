@@ -689,8 +689,8 @@ const Knowledge = memo(({ sheet, children }: KnowledgeProps) => {
     }
 
     chars = [
-        new Patchouli(patchySheet, dWidth - 600, dHeight - 100, Animations1.GettingUp, 0, Animations1, Direction.Right, canvas),
-        new Patchouli(patchySheet, dWidth - 1000, dHeight - 100, Animations1.Falling, 0, Animations1, Direction.Right, canvas),
+        new Patchouli(patchySheet, dWidth - 600, dHeight, Animations1.GettingUp, 0, Animations1, Direction.Right, canvas),
+        new Patchouli(patchySheet, dWidth - 1000, dHeight, Animations1.Falling, 0, Animations1, Direction.Right, canvas),
     ];
 
     fpsInterval = 1000 / fps;

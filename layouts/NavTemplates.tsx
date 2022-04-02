@@ -42,6 +42,13 @@ const homeMain: NavTemplate[] = [
     { content: <PatchyModal /> },
 ]
 
+const asayakeMain: NavTemplate[] = [
+    { content: <DefaultNavOption label="Home" href="/asayake"/> },
+    { content: <DefaultNavOption label="Invite" href="https://discord.com/api/oauth2/authorize?client_id=907538185976946720&permissions=268438528&scope=applications.commands%20bot"/> },
+    { content: <DefaultNavOption label="ToS" href="/asayake/legal"/> },
+    { content: <DefaultNavOption label="Privacy" href="/asayake/privacy"/> },
+]
+
 const yepMain: NavTemplate[] = [
     { content: <DefaultNavOption label="Home" href="/"/> },
     { content: <DefaultNavOption label="Patchouli?" href="#"/> },
@@ -56,4 +63,5 @@ export {
     homeMain,
     yepMain,
     logMain,
+    asayakeMain,
 }
