@@ -10,7 +10,7 @@ interface ProjectCardProps {
 
 function ProjectCard(props: ProjectCardProps) {
     return (
-        <Card className="md:w-[800px] h-[200px] md:h-[400px]" cover hoverable shadow>
+        <Card className="md:w-[600px] h-[300px] md:h-[300px]" cover hoverable shadow>
           <Card.Body>
             <Card.Image
               src= {props.image}

@@ -9,18 +9,20 @@ function Legal() {
     return (
         <>
             <HomeHead title="Asayake | ToS & Privacy" description="ToS for Asayake" path="/asayake/legal" />
-            <div className="w-screen h-screen bg-zinc-900 fixed top-0 left-0 right-0 bottom-0"/>
-            <div className="z-10 w-[50vw] color-white mt-32 mb-32 pointer-events-auto">
-                <Button auto color="secondary" className="mb-5">
-                    <Link href="/asayake" passHref>
-                        <CardLink>
-                            <p className="text-white">Go back</p>
-                        </CardLink>
-                    </Link>
-                </Button>
+            <div className="w-screen h-screen bg-zinc-900 fixed top-0 left-0 right-0 bottom-0" />
+            <div className="z-10 md:w-[50vw] w-[85vw]  color-white mt-32 mb-32 pointer-events-auto">
                 <div className="row">
                     <div className="col-12">
-                        <h1 className="text-4xl mt-5 mb-5">Terms of Service</h1>
+                        <div className="flex flex-row items-center justify-between">
+                            <h1 className="text-4xl mt-5 mb-5">Terms of Service</h1>
+                            <Button auto color="secondary" className="mt-2">
+                                <Link href="/asayake" passHref>
+                                    <CardLink>
+                                        <p className="text-white">Go back</p>
+                                    </CardLink>
+                                </Link>
+                            </Button>
+                        </div>
                         <h2 className="text-2xl mt-5 mb-5">Usage Agreement</h2>
                         <p>
                             Usage of Asayake is subject to the following terms and conditions. By using Asayake, you are agreeing to be bound by these terms and conditions mentioned below in this document.

@@ -6,13 +6,48 @@ import HomeHead from '../components/HomeHead'
 import HomeLayout from '../layouts/HomeLayout'
 import Script from 'next/script'
 import { homeMain } from '../layouts/NavTemplates';
+import { AnimationTemplate } from '../types/Animation'
+import { m } from 'framer-motion'
+
+const containerAnimation: AnimationTemplate = {
+	name: "float up",
+	variants: {
+		initial: {
+			opacity: 0,
+			y: 1000,
+		},
+		animate: {
+			opacity: [0, 1, 1, 1],
+			y: 0,
+			transition: {
+				delayChildren: 1.5,
+				staggerChildren: 0.5,
+				duration: 1.5,
+				type: "spring",
+				stiffness: 40,
+			}
+		},
+		exit: {
+			opacity: 0,
+			y: -100,
+			transition : {
+				duration : 0.3
+			}
+		}
+	},
+}
 
 function Projects() {
 	return (
 		<>
 			<HomeHead title="3zachm.dev | Projects" description="my projects" path="projects" />
 			<div className="w-screen pt-[200px] z-0 justify-center flex pointer-events-none">
-				<div>
+				<m.div className="pl-5 pr-5"
+					initial="initial"
+					animate="animate"
+					exit="exit"
+					variants={containerAnimation.variants}
+				>
 					<div className="flex justify-center">
 						<Text h1 size={60} css={{ textGradient: '45deg, $purple500 -20%, $pink300 100%' }} weight="bold" className="text-white mb-[110px] self-center select-none">
 							Projects
@@ -109,7 +144,7 @@ function Projects() {
 								</Row>
 							</>} />
 					</Grid>
-				</div>
+				</m.div>
 			</div>
 		</>
 	)
