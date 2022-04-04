@@ -90,7 +90,8 @@ function SocialCard() {
                     bgBlur: '#0f1114',
                     borderTop: '$borderWeights$light solid $gray600',
                     bottom: 0,
-                    zIndex: 1
+                    zIndex: 1,
+                    paddingBottom: 5,
                 }}
             >
                 <Row>
@@ -98,25 +99,25 @@ function SocialCard() {
                         <m.div initial="initial" animate="animate" variants={containerAnimation}>
                             <Row justify="space-between">
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#00b5d900' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
-                                        <Link className="text-white" href="https://twitter.com/3zachm">
+                                    <Link className="text-white p-0" href="https://twitter.com/3zachm">
+                                        <Button flat auto rounded css={{ color: '#fff', bg: '#00b5d900' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
                                             <Image src='/img/icons/twitter.png' alt='twitter' width="48px" height="48px"></Image>
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#d90e0000' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
-                                        <Link className="text-white" href="https://youtube.com/3zachm">
+                                    <Link className="text-white p-0" href="https://youtube.com/3zachm">
+                                        <Button flat auto rounded css={{ color: '#fff', bg: '#d90e0000' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
                                             <Image src='/img/icons/youtube.png' alt='youtube' width="48px" height="48px"></Image>
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#7e00d900' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
-                                        <Link className="text-white" href="https://twitch.tv/3zachm">
+                                    <Link className="text-white p-0" href="https://twitch.tv/3zachm">
+                                        <Button flat auto rounded css={{ color: '#fff', bg: '#7e00d900' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
                                             <Image src='/img/icons/twitch.png' alt='twitch' width="40px" height="40px"></Image>
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
                                     <Tooltip content={'Copied!'} trigger="click" color="default">
@@ -129,18 +130,18 @@ function SocialCard() {
                                     </Tooltip>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#ff66aa00' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
-                                        <Link className="text-white" href="https://osu.ppy.sh/users/8630110">
+                                    <Link className="text-white p-0" href="https://osu.ppy.sh/users/8630110">
+                                        <Button flat auto rounded css={{ color: '#fff', bg: '#ff66aa00' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
                                             <Image src='/img/icons/osu.png' alt='osu' width="46px" height="46px"></Image>
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 </m.div>
                                 <m.div variants={itemAnimation}>
-                                    <Button flat auto rounded css={{ color: '#fff', bg: '#00000000' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
-                                        <Link className="text-white" href="https://steamcommunity.com/id/3zachm/">
+                                    <Link className="text-white p-0" href="https://steamcommunity.com/id/3zachm/">
+                                        <Button flat auto rounded css={{ color: '#fff', bg: '#00000000' }} className="p-0 pr-1 pl-1 md:pl-5 md:pr-5">
                                             <Image src='/img/icons/steam.png' alt='steam' width="40px" height="40px"></Image>
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 </m.div>
                             </Row>
                         </m.div>

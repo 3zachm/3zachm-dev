@@ -30,8 +30,8 @@ const containerAnimation: AnimationTemplate = {
 		exit: {
 			opacity: 0,
 			y: -100,
-			transition : {
-				duration : 0.3
+			transition: {
+				duration: 0.3
 			}
 		}
 	},
@@ -62,20 +62,24 @@ function Projects() {
 									</Col>
 									<Col>
 										<Row justify="flex-end">
-											<Button flat auto rounded color="secondary" className="mr-2">
-												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='https://github.com/3zachm/colors-js' passHref>
-														<CardLink block color="secondary">Source</CardLink>
-													</Link>
-												</Text>
-											</Button>
-											<Button flat auto rounded color="secondary">
-												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='/asayake' passHref>
-														<CardLink block color="secondary">Invite</CardLink>
-													</Link>
-												</Text>
-											</Button>
+											<Link href='https://github.com/3zachm/colors-js' passHref>
+												<CardLink>
+													<Button flat auto rounded color="secondary" className="mr-2">
+														<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
+															Source
+														</Text>
+													</Button>
+												</CardLink>
+											</Link>
+											<Link href='/asayake' passHref>
+												<CardLink>
+													<Button flat auto rounded color="secondary">
+														<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
+															Invite
+														</Text>
+													</Button>
+												</CardLink>
+											</Link>
 										</Row>
 									</Col>
 								</Row>
@@ -90,39 +94,20 @@ function Projects() {
 									</Col>
 									<Col>
 										<Row justify="flex-end">
-											<Button flat auto rounded color="secondary">
-												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='/discord' passHref>
-														<CardLink block color="secondary">Link</CardLink>
-													</Link>
-												</Text>
-											</Button>
+											<Link href='/discord' passHref>
+												<CardLink>
+													<Button flat auto rounded color="secondary">
+														<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
+															Invite
+														</Text>
+													</Button>
+												</CardLink>
+											</Link>
 										</Row>
 									</Col>
 								</Row>
 							</>} />
 					</Grid>
-					{/* <Grid className="w-[100%] mb-20">
-						<ProjectCard image='/img/proj/ranks.webp' bgBlur='#000000' borderTop='$borderWeights$light solid rgba(255, 255, 255, 0.2)' content={
-							<>
-								<Row>
-									<Col>
-										<Text color="#fff" className="font-Manrope" size={24}>osu!ranks</Text>
-									</Col>
-									<Col>
-										<Row justify="flex-end">
-											<Button flat auto rounded color="secondary">
-												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='/osuranks' passHref>
-														<CardLink block color="secondary">Link</CardLink>
-													</Link>
-												</Text>
-											</Button>
-										</Row>
-									</Col>
-								</Row>
-							</>} />
-					</Grid> */}
 					<Grid className="w-[100%] mb-20">
 						<ProjectCard image='/img/proj/youmu.webp' bgBlur='#000000' borderTop='$borderWeights$light solid rgba(255, 255, 255, 0.2)' content={
 							<>
@@ -132,13 +117,15 @@ function Projects() {
 									</Col>
 									<Col>
 										<Row justify="flex-end">
-											<Button flat auto rounded color="secondary">
-												<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-													<Link href='https://github.com/3zachm/recursive-reminders' passHref>
-														<CardLink block color="secondary">Source</CardLink>
-													</Link>
-												</Text>
-											</Button>
+										<Link href='https://github.com/3zachm/recursive-reminders' passHref>
+												<CardLink>
+													<Button flat auto rounded color="secondary">
+														<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
+																Invite
+														</Text>
+													</Button>
+												</CardLink>
+											</Link>
 										</Row>
 									</Col>
 								</Row>

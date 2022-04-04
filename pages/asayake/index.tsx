@@ -219,8 +219,8 @@ function Asayake() {
                     exit="exit"
                     variants={buttonAnimation.variants}
                 >
-                    <Button auto color="secondary">
-                        <Link href="https://discord.com/api/oauth2/authorize?client_id=907538185976946720&permissions=268438528&scope=applications.commands%20bot" passHref>
+                    <Link href="https://discord.com/api/oauth2/authorize?client_id=907538185976946720&permissions=268438528&scope=applications.commands%20bot" passHref>
+                        <Button auto color="secondary">
                             <a className="text-white">
                                 <m.p
                                     className="text-xl"
@@ -232,10 +232,10 @@ function Asayake() {
                                     invite
                                 </m.p>
                             </a>
-                        </Link>
-                    </Button>
-                    <Button auto color="secondary">
-                        <Link href="/asayake/legal" passHref>
+                        </Button>
+                    </Link>
+                    <Link href="/asayake/legal" passHref>
+                        <Button auto color="secondary">
                             <a className="text-white">
                                 <m.p
                                     className="text-xl"
@@ -247,10 +247,10 @@ function Asayake() {
                                     tos
                                 </m.p>
                             </a>
-                        </Link>
-                    </Button>
-                    <Button auto color="secondary">
-                        <Link href="https://github.com/3zachm/colors-js" passHref>
+                        </Button>
+                    </Link>
+                    <Link href="https://github.com/3zachm/colors-js" passHref>
+                        <Button auto color="secondary">
                             <CardLink className="text-white">
                                 <m.p
                                     className="text-xl"
@@ -262,8 +262,8 @@ function Asayake() {
                                     github
                                 </m.p>
                             </CardLink>
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </m.div>
             </m.div>
         </>

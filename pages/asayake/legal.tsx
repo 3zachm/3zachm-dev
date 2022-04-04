@@ -4,6 +4,7 @@ import { ReactElement } from "react";
 import HomeHead from "../../components/HomeHead";
 import HomeLayout from "../../layouts/HomeLayout";
 import { homeMain } from "../../layouts/NavTemplates";
+import { IoIosArrowBack } from "react-icons/io";
 
 function Legal() {
     return (
@@ -15,13 +16,18 @@ function Legal() {
                     <div className="col-12">
                         <div className="flex flex-row items-center justify-between">
                             <h1 className="text-4xl mt-5 mb-5">Terms of Service</h1>
-                            <Button auto color="secondary" className="mt-2">
-                                <Link href="/asayake" passHref>
-                                    <CardLink>
-                                        <p className="text-white">Go back</p>
-                                    </CardLink>
-                                </Link>
-                            </Button>
+                            <Link href="/asayake" passHref>
+                                <CardLink>
+                                    <Button auto color="secondary" className="mt-2">
+
+                                        <div className="flex flex-row justify-between items-center">
+                                            <IoIosArrowBack className="mr-1 mt-[1px] text-white" size={16} />
+                                            <p className="text-white pr-2">Go back</p>
+                                        </div>
+
+                                    </Button>
+                                </CardLink>
+                            </Link>
                         </div>
                         <h2 className="text-2xl mt-5 mb-5">Usage Agreement</h2>
                         <p>
