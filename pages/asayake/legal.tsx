@@ -74,7 +74,7 @@ function Legal() {
                         </p>
                         <h2 className="text-2xl mt-5 mb-5">Deleting Data</h2>
                         <p>
-                            Asayake does not delete any data. If you wish to delete your server data, please contact us as outlined in the Contact section of the Terms of Service. You will need to provide evidence that you are an owner or administrator of the associated server ID.
+                            Asayake deletes server information when the bot is removed from your guild. If you wish to delete your server data, please contact us as outlined in the Contact section of the Terms of Service. You will need to provide evidence that you are an owner or administrator of the associated server ID.
                         </p>
                     </div>
                 </div>
