@@ -14,8 +14,8 @@ function Legal() {
             <div className="z-10 md:w-[50vw] w-[85vw]  color-white mt-32 mb-32 pointer-events-auto">
                 <div className="row">
                     <div className="col-12">
-                        <div className="flex flex-row items-center justify-between">
-                            <h1 className="text-4xl mt-5 mb-5">Terms of Service</h1>
+                        <div className="flex flex-row items-center justify-between mt-3">
+                            <h1 className="text-4xl mb-1">Terms of Service</h1>
                             <Link href="/asayake" passHref>
                                 <CardLink>
                                     <Button auto color="secondary" className="mt-2">
@@ -29,6 +29,7 @@ function Legal() {
                                 </CardLink>
                             </Link>
                         </div>
+                        <p className="mb-5 text-sm text-zinc-500">Last updated April 6, 2022</p>
                         <h2 className="text-2xl mt-5 mb-5">Usage Agreement</h2>
                         <p>
                             Usage of Asayake is subject to the following terms and conditions. By using Asayake, you are agreeing to be bound by these terms and conditions mentioned below in this document.
@@ -51,14 +52,14 @@ function Legal() {
                         <h1 className="text-4xl mt-10 mb-5">Privacy Policy</h1>
                         <h2 className="text-2xl mt-5 mb-5">Information We Collect</h2>
                         <p className="mb-2">
-                            Asayake collects information about servers the bot is used in. This includes the server ID and an optional role ID setting. More precisely:
+                            Asayake collects information about servers (guilds) the bot is used in. This includes the server ID and an optional role ID setting. More precisely:
                         </p>
                         <ul>
                             <li>
-                                <b>id</b> - the server ID
+                                <b>id</b> - the guild ID
                             </li>
                             <li>
-                                <b>role</b> - the role ID associated with the server ID, which is not required to function
+                                <b>role</b> - the role ID associated with the guild ID, which is not required to function
                             </li>
                         </ul>
                         <p>
@@ -74,7 +75,7 @@ function Legal() {
                         </p>
                         <h2 className="text-2xl mt-5 mb-5">Deleting Data</h2>
                         <p>
-                            Asayake deletes server information when the bot is removed from your guild. If you wish to delete your server data, please contact us as outlined in the Contact section of the Terms of Service. You will need to provide evidence that you are an owner or administrator of the associated server ID.
+                            Asayake deletes server information when the bot is removed from your guild. If you wish to ensure the deletion of your server data, please contact us as outlined in the Contact section of the Terms of Service. You will need to provide evidence that you are an owner or administrator of the associated server ID.
                         </p>
                     </div>
                 </div>
