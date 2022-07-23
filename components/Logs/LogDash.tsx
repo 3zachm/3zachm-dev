@@ -55,13 +55,29 @@ function LogDash(props: LogProps) {
     // states
     const [pageIndex, setPageIndex] = useState(1);
     const [formValues, setFormValues] = useState(defaultValues)
+    const [tempValues, setTempValues] = useState(defaultValues)
     // state functions
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
-        setFormValues({
-            ...formValues,
-            [name]: value,
-        });
+        // if temp is different from form, then set form to temp
+        console.log(formValues[name as keyof typeof formValues]);
+        if (formValues[name as keyof typeof formValues] !== value) {
+            setFormValues({ ...formValues, [name]: value })
+        }
+        setTempValues({ ...tempValues, [name]: value })
+    };
+    const handleDateChange = (name: string, date: Date | null) => {
+        // if temp is different from form, then set form to temp
+        if (formValues[name as keyof typeof formValues] !== date) {
+            setFormValues({ ...formValues, [name]: date })
+        }
+        setTempValues({ ...tempValues, [name]: date })
+    };
+    const handleInputEvent = (e: any) => {
+        // if key is enter, deselect the input box
+        if (e.key === "Enter") {
+            e.target.blur();
+        }
     };
 
     // API fetches
@@ -167,22 +183,24 @@ function LogDash(props: LogProps) {
     else msgCount = <>Messages <span style={{color: "pink"}}><CountUp end={count.total} separator="," duration={2.0} /></span></>
     const fullForm = (
         <>
-            <CssTextField name="username" label="Username" value={formValues.username} onChange={handleInputChange} type="search" />
-            <CssTextField name="search" label="Search" value={formValues.search} onChange={handleInputChange} type="search" />
+            <CssTextField name="username" label="Username" value={tempValues.username} onBlur={handleInputChange} type="search" onKeyPress={handleInputEvent} onChange={(e) => setTempValues({ ...tempValues, username: e.target.value })} />
+            <CssTextField name="search" label="Search" value={tempValues.search} onBlur={handleInputChange} type="search" onKeyPress={handleInputEvent} onChange={(e) => setTempValues({ ...tempValues, search: e.target.value })} />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
-                    renderInput={(props) => <TextField {...props} />}
+                    renderInput={(props) => <TextField {...props} name="endDate" onBlur={() =>  handleDateChange("endDate", tempValues.endDate)} />}
                     label="Before"
-                    value={formValues.endDate}
-                    onChange={(newDate) => setFormValues({ ...formValues, endDate: newDate })}
+                    value={tempValues.endDate}
+                    onChange={(date) => setTempValues({ ...tempValues, endDate: date })}
+                    onAccept={() => handleDateChange("endDate", tempValues.endDate)}
                 />
             </LocalizationProvider>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
-                    renderInput={(props) => <TextField {...props} />}
+                    renderInput={(props) => <TextField {...props} name="startDate" onBlur={() => handleDateChange("startDate", tempValues.startDate)} />}
                     label="After"
-                    value={formValues.startDate}
-                    onChange={(newDate) => setFormValues({ ...formValues, startDate: newDate })}
+                    value={tempValues.startDate}
+                    onChange={(date) => setTempValues({ ...tempValues, startDate: date })}
+                    onAccept={() =>  handleDateChange("startDate", tempValues.startDate)}
                 />
             </LocalizationProvider>
             <div className="sm:pt-0 pt-3 flex justify-center items-center flex-col">{ msgCount }</div>
