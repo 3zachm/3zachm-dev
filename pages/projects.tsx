@@ -98,7 +98,7 @@ function Projects() {
 												<CardLink>
 													<Button flat auto rounded color="secondary">
 														<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
-															Invite
+															Site
 														</Text>
 													</Button>
 												</CardLink>
