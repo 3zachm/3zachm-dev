@@ -259,6 +259,7 @@ class Patchouli {
         this.minY = this.getCurrentFrame().height / 2;
         this.maxX = this.canvas.width - this.getCurrentFrame().width;
         this.minX = 0;
+        // evaluate physics when 'free'
         if (this.dragged) {
             this.animation = this.animations.Dragged;
             return;
@@ -266,7 +267,7 @@ class Patchouli {
         else if (this.animation == this.animations.Floating || this.animation == this.animations.Falling) {
             this.yspeed += this.gravity;
             this.ypos += this.yspeed;
-
+            // x/y-bounds exceeded
             if (this.ypos >= this.maxY) {
                 this.ypos = this.maxY;
                 this.yspeed *= -1.0;
@@ -291,10 +292,6 @@ class Patchouli {
             if (Math.abs(this.yspeed) > 1) {
                 return;
             }
-            // else if (Math.abs (this.xspeed) > 1) {
-            //     this.setFall();
-            //     return;
-            // }
         }
         this.evalAction();
         this.frameTime++;
@@ -615,6 +612,7 @@ const spawn_patchy = () => {
 }
 
 function step() {
+    // frametime
     now = window.performance.now();
     elapsed = now - then;
 
@@ -626,6 +624,7 @@ function step() {
         ctx.canvas.width = window.innerWidth;
         ctx.canvas.height = window.innerHeight;
 
+        // render at 30 fps (evaluate physics w/o rendering)
         updateRender = (fps / 30) - frameCount <= 0 ? true : false;
 
         chars.forEach(element => {
@@ -651,6 +650,7 @@ function step() {
 
 const areEqual = (prevProps: any, nextProps: any) => true;
 
+// memo keeps load between pages changes (not layout changes)
 const Knowledge = memo(({ sheet, children }: KnowledgeProps) => {
     const [patchySheet, setPatchySheet] = useState<HTMLImageElement>(null as any);
     const [patchyLoaded, setPatchyLoaded] = useState(false);
@@ -661,11 +661,13 @@ const Knowledge = memo(({ sheet, children }: KnowledgeProps) => {
     const canvasID = children.props.id;
 
     useEffect(() => {
+        // first load
         if (!patchyLoaded) {
             canvas = document.getElementById(canvasID) as HTMLCanvasElement;
             ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
             then = window.performance.now();
-            startCanvas()
+            startCanvas();
+            // fix touch event listeners
             canvas.addEventListener("mousedown", mousedown);
             canvas.addEventListener("mouseup", mouseup);
             canvas.addEventListener("mousemove", mousemove);
@@ -693,7 +695,7 @@ const Knowledge = memo(({ sheet, children }: KnowledgeProps) => {
         new Patchouli(patchySheet, dWidth - 1000, dHeight, Animations1.Falling, 0, Animations1, Direction.Right, canvas),
     ];
 
-    fpsInterval = 1000 / fps;
+    fpsInterval = 1000 / fps; // ms
     startTime = then;
 
     return (

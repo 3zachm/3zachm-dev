@@ -16,8 +16,11 @@ function UserCard() {
     const { data, error } = useSWR('/api/anny/counts', fetcher);
     const loadSpinner = <Loading type="points-opacity" />;
     let content: React.ReactNode = null;
+    // on db fetch error
     if (error) return <Text>failed to load ;w;</Text>;
+    // waiting for api call
     else if (!data) content = "";
+    // display data
     if (data) content = <div>{data.count} {data.yep} {data.cock} </div>;
     return (
         <div className="flex flex-col max-w-[600px] min-w-[27vw] bg-black rounded-md p-10 z-[10] shadow-lg backdrop-blur bg-opacity-40 justify-center select-none">
