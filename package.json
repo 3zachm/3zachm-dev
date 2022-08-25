@@ -31,6 +31,8 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-script-hook": "^1.6.0",
     "sharp": "^0.30.1",
+    "socket.io": "^4.5.1",
+    "socket.io-client": "^4.5.1",
     "swr": "^1.2.2"
   },
   "devDependencies": {
