@@ -1,5 +1,4 @@
 import Navbar from '../components/Navbar';
-import useScript from 'react-script-hook';
 import { useRouter } from 'next/router';
 import { AnimatePresence, domAnimation, LazyMotion, m, Transition, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -43,6 +42,7 @@ function HomeLayout(props: HomeProps) {
     useEffect(() => {
         setLoaded(true);
     }, []);
+
     // misc
     const navOptions = props.navOptions;
 

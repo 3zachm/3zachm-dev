@@ -166,7 +166,7 @@ function Home() {
 						transition = { textChildAnimation.transition }
 						variants = { textChildAnimation.variants }
 					>
-						i&apos;m zach, ur average 東方 cs dev
+						i&apos;m zach, i do cs stuff sometimes
 					</m.p>
 					<m.div
 						whileHover={{ scale: 1.1, filter: "drop-shadow(0px 0px 8px rgb(253 224 71))" }}
