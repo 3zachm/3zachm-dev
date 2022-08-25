@@ -6,11 +6,12 @@ import { Box, Button, Grid, styled, TextField } from "@mui/material";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import Link from "next/link";
 import { add, format, parseISO, sub } from 'date-fns'
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import Image from 'next/image';
 import CountUp from "react-countup";
+import router from "next/router";
+import ViewportList from "react-viewport-list";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -23,6 +24,15 @@ interface FormValues {
     search: string;
     startDate: Date | null;
     endDate: Date | null;
+    page?: number;
+}
+
+interface QueryValues {
+    username?: string;
+    search?: string;
+    startDate?: string
+    endDate?: string
+    page?: number;
 }
 
 const styleLabel = styled(TextField)({
@@ -49,30 +59,72 @@ const defaultValues: FormValues = {
     search: "",
     startDate: null,
     endDate: null,
+    page: 1
 }
 
 function LogDash(props: LogProps) {
     // states
     const [pageIndex, setPageIndex] = useState(1);
-    const [formValues, setFormValues] = useState(defaultValues)
-    const [tempValues, setTempValues] = useState(defaultValues)
+    const [formValues, setFormValues] = useState(defaultValues);
+    const [tempValues, setTempValues] = useState(defaultValues);
+    const firstUpdate = useRef(true);
+    // state
+    useEffect(() => {
+        // check if this is the first update
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            // set form and temp to query values
+            const initialQuery: FormValues = {
+                username: router.query.username as string || "",
+                search: router.query.search as string || "",
+                startDate: router.query.startDate ? parseISO(router.query.startDate as string) : null,
+                endDate: router.query.endDate ? parseISO(router.query.endDate as string) : null,
+                page: router.query.page ? parseInt(router.query.page as string) : 1
+            }
+            setFormValues(initialQuery);
+            setTempValues(initialQuery);
+            setPageIndex(initialQuery.page ? initialQuery.page : 1);
+            return;
+        }
+        // update query values
+        const queryList: QueryValues = {};
+
+        if (tempValues.username != "")    { queryList["username"] = tempValues.username; }
+        if (tempValues.search != "")      { queryList["search"] = tempValues.search; }
+        if (tempValues.startDate != null) { queryList["startDate"] = tempValues.startDate?.toISOString(); }
+        if (tempValues.endDate != null)   { queryList["endDate"] = tempValues.endDate?.toISOString(); }
+        if (pageIndex > 1)                { queryList["page"] = pageIndex; }
+
+        router.push({
+            pathname: "/logs",
+            // update all the query params from tempValues
+            query: {
+                ...queryList,
+            }
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formValues, pageIndex])
+
     // state functions
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         // if temp is different from form, then set form to temp
-        console.log(formValues[name as keyof typeof formValues]);
         if (formValues[name as keyof typeof formValues] !== value) {
             setFormValues({ ...formValues, [name]: value })
+            setPageIndex(1);
         }
         setTempValues({ ...tempValues, [name]: value })
     };
+
     const handleDateChange = (name: string, date: Date | null) => {
         // if temp is different from form, then set form to temp
         if (formValues[name as keyof typeof formValues] !== date) {
             setFormValues({ ...formValues, [name]: date })
+            setPageIndex(1);
         }
         setTempValues({ ...tempValues, [name]: date })
     };
+
     const handleInputEvent = (e: any) => {
         // if key is enter, deselect the input box
         if (e.key === "Enter") {
@@ -158,22 +210,26 @@ function LogDash(props: LogProps) {
         );
     }
     else {
-        logContent = logs.data.map((item: any) =>
-            <div key={item.msg_id}>
-                <div className="pt-[5px] flex flex-row items-start">
-                    <div className="flex sm:inline-flex items-center w-fit">
-                        <span className="mr-[8px] text-[#adadb8] whitespace-nowrap sm:block hidden" data-chattime={format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')} onClick={handleVodRedir}>{format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')}</span>
-                        <span className="mr-[8px] text-[#adadb8] whitespace-nowrap block sm:hidden" data-chattime={format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')} onClick={handleVodRedir}>{format(new Date(item.time), 'hh:mm')}</span>
-                        <span className="h-[20px] w-fit">{parseBadges(item.badges).map((x: any) => x)}</span>
-                        <span style={{ color: `${(item.color != "#000000") ? item.color : "#BBBBBB"}`, fontWeight: "bold" }}>{item.user}</span>
-                        <span aria-hidden="true">: </span>
+        logContent = <>
+            <ViewportList items={logs.data} itemMinSize={0} >
+                {(item: any) => (
+                <div key={item.msg_id}>
+                    <div className="pt-[5px] flex flex-row items-start">
+                        <div className="flex sm:inline-flex items-center w-fit">
+                            <span className="mr-[8px] text-[#adadb8] whitespace-nowrap sm:block hidden" data-chattime={format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')} onClick={handleVodRedir}>{format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')}</span>
+                            <span className="mr-[8px] text-[#adadb8] whitespace-nowrap block sm:hidden" data-chattime={format(new Date(item.time), 'yyyy-MM-dd HH:mm:ss')} onClick={handleVodRedir}>{format(new Date(item.time), 'hh:mm')}</span>
+                            <span className="h-[20px] w-fit">{parseBadges(item.badges).map((x: any) => x)}</span>
+                            <span style={{ color: `${(item.color != "#000000") ? item.color : "#BBBBBB"}`, fontWeight: "bold" }}>{item.user}</span>
+                            <span aria-hidden="true">: </span>
+                        </div>
+                        <div className="sm:inline-flex hidden max-w-[60%] ml-1">{item.message}</div>
                     </div>
-                    <div className="sm:inline-flex hidden max-w-[60%] ml-1">{item.message}</div>
+                    <div className="inline-flex sm:hidden max-w-[80%]">{item.message}</div>
+                    <Divider className="sm:hidden block mt-2" />
                 </div>
-                <div className="inline-flex sm:hidden max-w-[80%]">{item.message}</div>
-                <Divider className="sm:hidden block mt-2" />
-            </div>
-        )
+                )}
+            </ViewportList>
+        </>
     }
     // pagination--------------------
     if (!count) paginationDiv = <Loading type="points-opacity" />;
@@ -220,7 +276,7 @@ function LogDash(props: LogProps) {
                     </div>
                 </Collapse>
             </div>
-            <div className="flex justify-center flex-col pointer-events-auto pt-7 max-w-[100vw]">
+            <div className="flex justify-center flex-col pointer-events-auto pt-7 w-[100vw]">
                 <Grid
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -270,7 +326,8 @@ function LogDash(props: LogProps) {
                                 overflow: 'auto',
                                 padding: '3rem',
                             }}
-                            className="shadow-lg backdrop-blur bg-opacity-70 bg-zinc-900 lg:ml-12 lg:mt-20 lg:mb-4 lg:mr-12 lg:max-h-[75vh] max-h-[70vh] lg:min-h-[75vh] min-h-[70vh] min-w-[60vw]">
+                            className="shadow-lg backdrop-blur bg-opacity-70 bg-zinc-900 lg:ml-12 lg:mt-20 lg:mb-4 lg:mr-12 lg:max-h-[75vh] lg:min-h-[75vh] min-h-[70vh] max-h-[70vh] w-[80vw] md:w-[70vw] lg:w-[60vw]"
+                        >
                             <div className="overflow-hidden">
                                 {logContent}
                             </div>
