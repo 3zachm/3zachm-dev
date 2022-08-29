@@ -63,7 +63,7 @@ function Misc() {
 		<>
 			<HomeHead title="3zachm.dev | Misc" description="misc" path="misc" />
 			<div className="w-screen md:w-[75vw]  z-0 justify-center flex pointer-events-none">
-				<m.div initial="initial" animate="animate" variants={containerAnimation} className="max-w-[100%] min-w-[50vw] justify-start flex flex-row pt-[60px]">
+				<m.div initial="initial" animate="animate" variants={containerAnimation} className="max-w-[100%] min-w-[50vw] justify-start flex flex-row pt-[60px] overflow-hidden">
 					<Grid.Container gap={2} justify="flex-start">
 							{list.map((item, index) => (
 								<Grid xs={6} sm={4} key={index} className="flex justify-center">
