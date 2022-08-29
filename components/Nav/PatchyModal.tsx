@@ -7,13 +7,15 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    minWidth: 550,
+    maxWidth: '100vw',
+    minWidth: 'min(550px, 100vw)',
     minHeight: 250,
     width: "30vw",
     bgcolor: 'rgba(0, 0, 0, 0.78)',
     p: 4,
     outline: 'none',
     select: 'none',
+    borderRadius: '1.5rem',
 };
 
 function PatchyModal() {

@@ -124,7 +124,7 @@ function Home() {
 		<>
 			<HomeHead title="3zachm.dev | Hello" description="Hello" path="" />
 			<m.div
-				className="p-5 flex flex-col items-center justify-center select-none relative min-h-[250px] lg:max-w-[40vw] backdrop-blur bg-opacity-70 bg-zinc-900 rounded-3xl overflow-hidden"
+				className="p-5 flex flex-col items-center justify-center select-none relative min-h-[250px] xl:max-w-[40vw] backdrop-blur bg-opacity-70 bg-zinc-900 rounded-3xl overflow-hidden"
 				initial = "initial"
 				animate = "animate"
 				exit = "exit"
