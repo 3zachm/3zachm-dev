@@ -677,6 +677,7 @@ const Knowledge = memo(({ sheet, children }: KnowledgeProps) => {
                     spawn_patchy();
                 }
             }
+            setPatchyLoaded(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

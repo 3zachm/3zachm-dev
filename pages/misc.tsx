@@ -44,9 +44,9 @@ function Misc() {
 			url: '/asayake',
 		},
 		{
-			title: 'YEP Counter',
+			title: '404',
 			img: '/img/misc/yepthumb.webp',
-			url: '/yep',
+			url: '/_error',
 		},
 		{
 			title: 'secret stuff >:)',
@@ -62,11 +62,11 @@ function Misc() {
 	return (
 		<>
 			<HomeHead title="3zachm.dev | Misc" description="misc" path="misc" />
-			<div className="w-screen z-0 justify-center flex pointer-events-none">
+			<div className="w-screen md:w-[75vw]  z-0 justify-center flex pointer-events-none">
 				<m.div initial="initial" animate="animate" variants={containerAnimation} className="max-w-[100%] min-w-[50vw] justify-start flex flex-row pt-[60px]">
 					<Grid.Container gap={2} justify="flex-start">
 							{list.map((item, index) => (
-								<Grid xs={6} sm={4} key={index}>
+								<Grid xs={6} sm={4} key={index} className="flex justify-center">
 									<m.div variants={itemAnimation}>
 										<MiscCard item={item} />
 									</m.div>
