@@ -74,10 +74,20 @@ async function getVideos(userID: string) {
     return await applyCache("TWITCH.VIDEOS_" + userID, `https://api.twitch.tv/helix/videos?user_id=${userID}?limit=100`, 360);
 }
 
+async function getGlobalEmotes() {
+    return await applyCache("TWITCH.GLOBAL_EMOTES", `https://api.twitch.tv/helix/chat/emotes/global`, 3600);
+}
+
+async function getChannelEmotes(channelID: string) {
+    return await applyCache("TWITCH.CHANNEL_EMOTES_" + channelID, `https://api.twitch.tv/helix/chat/emotes?broadcaster_id=${channelID}`, 600);
+}
+
 export {
     getUserByID,
     getUserByName,
     getChannelBadges,
     getGlobalBadges,
     getVideos,
+    getGlobalEmotes,
+    getChannelEmotes,
 }
