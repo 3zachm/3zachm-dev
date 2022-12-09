@@ -85,6 +85,29 @@ function Projects() {
 								</Row>
 							</>} />
 					</Grid>
+					<Grid className="w-[100%] mb-20 select-none">
+						<ProjectCard image='/img/proj/invest.webp' bgBlur='#000000' borderTop='$borderWeights$light solid rgba(255, 255, 255, 0.2)' content={
+							<>
+								<Row>
+									<Col>
+										<Text color="#fff" className="font-Manrope" size={24}>InvestBot Frontend</Text>
+									</Col>
+									<Col>
+										<Row justify="flex-end">
+											<Link href='https://invest.3zachm.dev' passHref>
+												<CardLink>
+													<Button flat auto rounded color="secondary" className="mr-2">
+														<Text css={{ color: 'inherit' }} size={12} weight="bold" transform="uppercase">
+															Site
+														</Text>
+													</Button>
+												</CardLink>
+											</Link>
+										</Row>
+									</Col>
+								</Row>
+							</>} />
+					</Grid>
 					<Grid className="w-[100%] mb-20">
 						<ProjectCard image='/img/proj/discord.webp' bgBlur='#000000' borderTop='$borderWeights$light solid rgba(255, 255, 255, 0.2)' content={
 							<>
