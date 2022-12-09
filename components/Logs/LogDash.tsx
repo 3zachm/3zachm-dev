@@ -139,10 +139,13 @@ function LogDash(props: LogProps) {
     let apiCountURL = `/api/anny/logs_count?u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
     let apiBadges = `/api/twitch/badges?c=56418014`;
     let apiVideos = `/api/twitch/videos?c=56418014`;
+    let apiEmotes = `/api/twitch/emotes?c=56418014`;
+    let api7tvEmotes = `/api/7tv/emotes?c=61ad997effa9aba101bcfddf`;
 
     const logs = useSWR(apiURL, fetcher).data;
     const count = useSWR(apiCountURL, fetcher).data;
     const allBadges = useSWR(apiBadges, fetcher).data;
+    const allEmotes = useSWR(apiEmotes, fetcher).data;
     const videos = useSWR(apiVideos, fetcher).data;
 
     // badge handling
@@ -173,6 +176,36 @@ function LogDash(props: LogProps) {
         return badgeImages;
     }
 
+    // this is laggy as fuck, please think :)
+    const parseEmotes = (message: string) => {
+        // all emotes has all the emotes available to the channel, replace the emote name with the image
+        let words = message.split(" ");
+        let newMessage: ReactJSXElement[] = [];
+        words.forEach((word) => {
+            // if the word is a global or channel emote
+            if (allEmotes.global.find((x: { name: string; }) => x.name == word)) {
+                let emote = allEmotes.global.find((x: { name: string; }) => x.name == word);
+                newMessage.push(
+                    <span className={"mr-[3px] inline-flex"} key={word}>
+                        <Image className={"align-middle max-h-8 max-w-[64px]"} alt={word} width={28} height={28} src={emote.images.url_1x} />
+                    </span>
+                );
+            }
+            else if (allEmotes.channel.find((x: { name: string; }) => x.name == word)) {
+                let emote = allEmotes.channel.find((x: { name: string; }) => x.name == word);
+                newMessage.push(
+                    <span className={"mr-[3px] inline-flex"} key={word}>
+                        <Image className={"align-middle max-h-8 max-w-[64px]"} alt={word} width={28} height={28} src={emote.images.url_1x} />
+                    </span>
+                );
+            }
+            else {
+                newMessage.push(<span className={"mr-[3px] inline-flex"} key={word}>{word}</span>);
+            }
+        });
+        return newMessage;
+    }
+
     async function handleVodRedir(e: any) {
         e.preventDefault();
         const chatTime = parseISO(e.target.dataset.chattime);
@@ -197,7 +230,7 @@ function LogDash(props: LogProps) {
     let paginationDiv;
     let msgCount;
     // logs
-    if (!logs || !allBadges) {
+    if (!logs || !allBadges || !allEmotes) {
         const item = {
             msg_id: "0",
             message : "Loading",
@@ -222,7 +255,7 @@ function LogDash(props: LogProps) {
                             <span style={{ color: `${(item.color != "#000000") ? item.color : "#BBBBBB"}`, fontWeight: "bold" }}>{item.user}</span>
                             <span aria-hidden="true">: </span>
                         </div>
-                        <div className="sm:inline-flex hidden max-w-[60%] ml-1">{item.message}</div>
+                        <div className="sm:inline-flex hidden max-w-[60%] ml-1">{parseEmotes(item.message)}</div>
                     </div>
                     <div className="inline-flex sm:hidden max-w-[80%]">{item.message}</div>
                     <Divider className="sm:hidden block mt-2" />
