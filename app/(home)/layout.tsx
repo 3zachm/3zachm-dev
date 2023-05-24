@@ -7,8 +7,9 @@ import styles from './layout.module.scss'
 import Knowledge from './Knowledge'
 
 export const metadata = {
-  title: 'home | 3zachm.dev',
-  description: 'my site',
+  title: '3zachm.dev',
+  themeColor: '#b875d7',
+  description: 'hi!',
   viewport: {
     initialScale: 0.8,
   }

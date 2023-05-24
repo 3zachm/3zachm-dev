@@ -7,6 +7,7 @@ const vietnam = Be_Vietnam_Pro({ subsets: ['latin'], weight: ['100', '200', '300
 
 export const metadata = {
   title: 'sign in | 3zachm.dev',
+  themeColor: '#b875d7',
   description: 'sign in page!',
 }
 

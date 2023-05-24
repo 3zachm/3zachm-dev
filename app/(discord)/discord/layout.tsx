@@ -2,6 +2,7 @@ import { Be_Vietnam_Pro } from "next/font/google"
 
 export const metadata = {
   title: 'Discord Cropper | 3zachm.dev',
+  themeColor: '#b875d7',
   description: 'A tool to crop images for Discord',
 }
 
