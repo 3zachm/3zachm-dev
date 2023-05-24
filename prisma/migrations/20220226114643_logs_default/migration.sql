@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `logs` MODIFY `color` VARCHAR(9) NULL DEFAULT '#FFFFFF';
