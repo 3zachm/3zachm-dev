@@ -1,0 +1,105 @@
+@import "/app/breakpoints.scss";
+
+.scroll__element {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--cr-ina-grey);
+  border-radius: var(--br-radius-medium);
+}
+
+.scroll__element--fade {
+  opacity: 0;
+}
+
+.banner__text {
+  &::before {
+    transition: all 0.25s ease-in-out;
+    opacity: 0;
+    content: "稲葉曇 X ぬくぬくにぎりめし";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    // center
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // text
+    font-size: 2em;
+    font-weight: 700;
+    z-index: 100;
+
+    @include media("<=xl") {
+      font-size: 1.0em;
+    }
+
+    @include media("<=md") {
+      font-size: 1.5em;
+    }
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &--sound {
+    &::before {
+      content: "";
+    }
+  }
+
+  &--inaba {
+    img {
+      position: relative !important;
+    }
+  }
+}
+
+
+.sound__container {
+  background-color: white;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--br-radius-medium);
+}
+
+.sound__logo__container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 10%;
+  img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative!important;
+  }
+}
+
+.sound__waves {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  // attach to bottom
+  height: 100%;
+
+  &__bottom {
+    background-color: var(--cr-sound-transit-wave-blue);
+    width: 100%;
+    height: 10%;
+  }
+}

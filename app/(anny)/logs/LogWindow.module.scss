@@ -1,0 +1,145 @@
+@import "/app/breakpoints.scss";
+
+.log__container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: scroll;
+
+  &--loading {
+    h2 {
+      margin-bottom: 1rem;
+    }
+    overflow: hidden;
+  }
+}
+
+.log__message {
+  padding-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-family: var(--font-inter);
+  font-weight: 300;
+
+  @include media("<=md") {
+    flex-direction: column;
+    border-bottom: 1px solid var(--cr-outline);
+    padding-bottom: 0.5rem;
+  }
+}
+
+.message__pre {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+
+  &__separator {
+    @include media("<=md") {
+      display: none;
+    }
+  }
+
+  &__name {
+    font-weight: 600;
+  }
+
+  &__badge {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__date {
+    margin-right: 8px;
+    white-space: nowrap;
+    font-family: (var(--font-roboto));
+
+    &__full {
+      @include media("<=md") {
+        display: none;
+      }
+    }
+
+    &__mobile {
+      display: none;
+
+      @include media("<=md") {
+        display: block;
+      }
+    }
+
+    &--clickable {
+      cursor: pointer;
+    }
+
+    &__tooltip {
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease-in-out;
+      transition-delay: 150ms;
+      user-select: none;
+      position: absolute;
+      z-index: 1;
+      padding: 0.5rem;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: var(--br-radius-medium);
+      overflow: hidden;
+
+      // animate once
+      animation: fadein 0.2s ease-in-out 1;
+
+      &__thumbnail {
+        width: 80%;
+        object-fit: cover;
+        border-radius: var(--br-radius-small);
+      }
+
+      &__title {
+        // wrap text
+        width: 100%;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+
+      &__time {
+        font-family: var(--font-inter);
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+.badge__image {
+  margin-right: 3px;
+  height: 18px;
+}
+
+.message__content {
+  margin-left: 4px;
+  overflow-wrap: anywhere;
+}
+
+// animations
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+}

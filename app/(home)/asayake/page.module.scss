@@ -1,0 +1,158 @@
+@import "/app/breakpoints.scss";
+
+.page__container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  pointer-events: none;
+  z-index: var(--z-base);
+  font-family: var(--font-vietnam);
+
+  a {
+    text-decoration: none;
+    color: var(--cr-accent-secondary);
+    transition: all 0.25s ease-in-out;
+    z-index: var(--z-base);
+    pointer-events: all;
+
+    &:hover {
+      color: var(--cr-accent-tertiary);
+    }
+  }
+}
+
+.page__main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  @include media("<=md") {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+  }
+}
+
+.main__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--text-primary);
+
+  @include media("<=md") {
+    align-items: center;
+  }
+}
+
+.main__left__content {
+  &__title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--cr-twitch-purple-10);
+    text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  }
+
+  &__subtitle h2 {
+    font-weight: 300;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  }
+
+  &__body {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  &__links {
+    p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+  }
+
+  @include media("<=xl") {
+    &__title {
+      font-size: 2.5rem;
+    }
+
+    &__subtitle h2 {
+      font-size: 1.5rem;
+    }
+
+    &__body {
+      font-size: 1.25rem;
+    }
+  }
+
+  @include media("<=md") {
+    margin-left: 1rem;
+    height: 0px;
+  }
+}
+
+.main__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-primary);
+
+  @include media("<=md") {
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--text-primary);
+    gap: 1.5rem;
+    width: fit-content;
+
+
+    &__item {
+      font-size: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1rem;
+      color: var(--text-primary);
+      transition: all 0.25s ease-in-out;
+
+      svg {
+        height: 4rem;
+        width: 4rem;
+      }
+
+      &:hover {
+        transform: translateY(-0.25rem);
+        text-shadow: 0 0 25px var(--text-primary);
+      }
+
+      @include media("<=xl") {
+        font-size: 1.5rem;
+
+        svg {
+          height: 3rem;
+          width: 3rem;
+        }
+      }
+    }
+  }
+}
+
+.title--colors {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-color: #f9c5d1;
+  background-image: linear-gradient(315deg, #f9c5d1 0%, #9795ef 74%);
+  text-shadow: none;
+}

@@ -1,0 +1,53 @@
+@import "/app/breakpoints.scss";
+
+.page__cover {
+  // center
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-topmost);
+  // size
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  // animation
+  animation: slideFadeOut 1s ease-in-out 0.2s forwards;
+
+  pointer-events: none;
+}
+
+.page__body {
+  background-image: linear-gradient(to right, var(--bg-primary) 50%, var(--cr-accent) 50%);
+  background-repeat: repeat-y;
+
+  @include media("<=md") {
+    background-image: var(--bg-primary)
+  }
+}
+
+.navbar__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: var(--z-top);
+  width: 100%;
+}
+
+.main__content {
+  margin: 0 5%;
+  min-height: 100%;
+
+  @include media("<=xl") {
+    margin: 0 5%;
+  }
+}
+
+@keyframes slideFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
