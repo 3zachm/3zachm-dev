@@ -3,7 +3,7 @@ import styles from './LogWindow.module.scss';
 import { add, format, parseISO } from "date-fns";
 import Image from "next/image";
 import FormValues from "@/interface/logs/FormValues";
-import { useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { Skeleton } from "@mui/material";
 
 interface LogWindowProps {
@@ -53,8 +53,17 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
   const videoData = videos.data.map((video: any) => {
     const startTime = parseISO(video.created_at);
     const length = video.duration; // formatted like 03h20m00s, may be shorter
-    console.log(length);
-    const end = add(startTime, { hours: Number(length.substring(0, 2)), minutes: Number(length.substring(3, 5)), seconds: Number(length.substring(6, 8)) });
+    const timeRegex = /(\d+)(h|m|s)/g;
+    let match;
+    let duration = { hours: 0, minutes: 0, seconds: 0 };
+
+    while ((match = timeRegex.exec(length)) !== null) {
+      if (match[2] === "h") duration.hours = parseInt(match[1]);
+      else if (match[2] === "m") duration.minutes = parseInt(match[1]);
+      else if (match[2] === "s") duration.seconds = parseInt(match[1]);
+    }
+
+    const end = add(startTime, duration);
 
     return {
       id: video.id,
@@ -101,7 +110,7 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
                     if (tooltip) e.currentTarget.removeChild(tooltip);
                   }}
                   onClick={(e) => { if (e.currentTarget.dataset.vodURL) window.open(e.currentTarget.dataset.vodURL, "_blank") }}
-                  data-chattime={format(new Date(log.time), 'yyyy-MM-dd HH:mm:ss')}
+                  data-chattime={new Date(log.time).toISOString()}
                 >
                   <span className={styles['message__pre__date__full']}>{format(new Date(log.time), 'yyyy-MM-dd HH:mm:ss')}</span>
                   <span className={styles['message__pre__date__mobile']}>{format(new Date(log.time), 'HH:mm')}</span>
@@ -145,7 +154,7 @@ function ParseBadges ({ badgeList, badgeData }: { badgeList: string, badgeData: 
 function messageVod(e: any, videoData: [{ id: string, title: string, startTime: Date, endTime: Date, thumbnail: string }]) {
   e.preventDefault();
   if (e.currentTarget.dataset.vodURL) return e.currentTarget.dataset.vodURL;
-  const timestamp = e.currentTarget.dataset.chattime;
+  const timestamp = new Date(e.currentTarget.dataset.chattime);
   // find video that contains timestamp
   const video = videoData.find((video: any) => video.startTime <= new Date(timestamp) && video.endTime >= new Date(timestamp));
   if (video) {
