@@ -17,7 +17,7 @@
 }
 
 .log__message {
-  padding-top: 5px;
+  line-height: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -129,6 +129,21 @@
 .message__content {
   margin-left: 4px;
   overflow-wrap: anywhere;
+}
+
+.emote__container {
+  display: inline-grid;
+  vertical-align: middle;
+  margin-left: -0.5rem;
+  margin-left: 0!important;
+  margin-right: 0!important;
+  overflow: clip;
+
+  img {
+    max-width: 100%;
+    vertical-align: top;
+    border: none;
+  }
 }
 
 // animations

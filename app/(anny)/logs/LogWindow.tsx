@@ -3,8 +3,9 @@ import styles from './LogWindow.module.scss';
 import { add, format, parseISO } from "date-fns";
 import Image from "next/image";
 import FormValues from "@/interface/logs/FormValues";
-import { ReactElement, useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { Skeleton } from "@mui/material";
+import TwitchEmote from "@/interface/twitch/TwitchEmote";
 
 interface LogWindowProps {
   formValues: FormValues;
@@ -20,10 +21,13 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
   const apiURL = `/api/logs?p=${formValues.page}&u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
   const apiBadges = `/api/twitch/badges?c=56418014&m=1`;
   const apiVideos = `/api/twitch/videos?c=56418014`;
+  const apiEmotes = `/api/twitch/emotes?c=56418014&s=61ad997effa9aba101bcfddf&m=1`;
 
   const { data: logs, error: logError, isLoading: logIsLoading } = useSWR(apiURL, fetcher, { revalidateOnFocus: false });
   const { data: badges, error: badgesError, isLoading: badgesIsLoading } = useSWR(apiBadges, fetcher, { revalidateOnFocus: false });
   const { data: videos, error: videosError, isLoading: videosIsLoading } = useSWR(apiVideos, fetcher, { revalidateOnFocus: false });
+  const { data: emotes, error: emotesError, isLoading: emotesIsLoading } = useSWR(apiEmotes, fetcher, { revalidateOnFocus: false });
+  let emoteData: TwitchEmote[] = [];
 
   useEffect(() => {
     if (!logIsLoading && !logError) {
@@ -36,6 +40,10 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
       setVodCount(videos.data.length);
     }
   }, [videos, setVodCount, videosIsLoading, videosError]);
+
+  if (!emotesIsLoading && !emotesError) {
+    emoteData = emotes.data;
+  }
 
   if (logIsLoading || videosIsLoading) return (
     <div className={styles['log__container'] + " " + styles['log__container--loading']}>
@@ -124,7 +132,10 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
                 {/* separator */}
                 <span aria-hidden="true" className={styles['message__pre__separator']}>:</span>
               </div>
-              <div className={styles['message__content']}> {log.message} </div>
+              <div className={styles['message__content']}>
+                {/* emotes */}
+                <ParseEmotes message={log.message} emoteData={emoteData} />
+              </div>
             </div>
           </div>
         ))
@@ -150,6 +161,40 @@ function ParseBadges ({ badgeList, badgeData }: { badgeList: string, badgeData: 
     </>
   );
 }
+
+function ParseEmotes({ message, emoteData }: { message: string, emoteData: TwitchEmote[] }) {
+  if (!message) return <></>;
+  if (!emoteData) return <>{message}</>;
+  const words = message.split(" ");
+
+  let newMessage: ReactNode[] = [];
+  words.forEach((word: string) => {
+    const emote = emoteData.find((emote: TwitchEmote) => emote.name === word);
+    if (emote) {
+      newMessage.push(
+        <span>
+          <div className={styles['emote__container']}>
+            <img
+              key={word}
+              src={emote.images.url_1x}
+              alt={word}
+            />
+          </div>
+        </span>
+      );
+    } else {
+      newMessage.push(<span>{word}</span>);
+    }
+  });
+  return (
+    <>
+      {newMessage.reduce<ReactNode[]>((acc, curr, index) => {
+        return index === 0 ? [curr] : [...acc, " ", curr];
+      }, [])}
+    </>
+  );
+}
+
 
 function messageVod(e: any, videoData: [{ id: string, title: string, startTime: Date, endTime: Date, thumbnail: string }]) {
   e.preventDefault();
