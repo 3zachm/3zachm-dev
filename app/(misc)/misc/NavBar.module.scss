@@ -1,0 +1,122 @@
+@import "/app/breakpoints.scss";
+
+.container {
+  height: 100%;
+  width: 60px;
+  padding: 5px;
+  background-color: var(--bg-secondary);
+  transition: background-color 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  @include media("<=md") {
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+  }
+}
+
+.nav__item {
+  a {
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  position: relative;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+
+  &__tooltip {
+    opacity: 0;
+    transform: scale(0.7);
+    left: 0;
+    transition: all 0.2s ease-in-out;
+    transition-delay: 150ms;
+    user-select: none;
+    position: absolute;
+    z-index: 1;
+
+    @include media("<=md") {
+      // center tooltip on mobile
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) scale(0.7);
+    }
+
+    & div {
+      white-space: nowrap;
+    }
+
+    pointer-events: none;
+    background-color: var(--cr-accent);
+    color: var(--text-accent);
+    padding: 5px;
+    border-radius: var(--br-radius-small);
+  }
+
+  svg {
+    transition: all 0.2s ease-in-out;
+    color: var(--text-primary);
+  }
+
+  &--active svg {
+    color: var(--cr-accent-secondary);
+    // make svg glow
+    filter: drop-shadow(0 0 11px var(--cr-accent));
+  }
+
+  &:hover svg {
+    transform: scale(1.2);
+    color: var(--cr-accent);
+  }
+
+  &:hover &__tooltip {
+    opacity: 1;
+    left: calc(100% + 10px);
+    transform: scale(1);
+
+    @include media("<=md") {
+      // center under icon on mobile
+      left: 50%;
+      transform: translateX(-50%) scale(1);
+      top: calc(100% + 10px);
+    }
+  }
+}
+
+.nav__upper {
+  padding-top: 10px;
+
+  @include media("<=md") {
+    padding-top: 0;
+    padding-left: 10px;
+  }
+}
+
+.nav__lower {
+  padding-bottom: 10px;
+
+  @include media("<=md") {
+    padding-bottom: 0;
+    padding-right: 10px;
+    justify-content: flex-end;
+  }
+}
+
+.nav__section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  @include media("<=md") {
+    flex-direction: row;
+  }
+}
