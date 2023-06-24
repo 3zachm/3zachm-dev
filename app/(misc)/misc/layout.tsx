@@ -23,8 +23,8 @@ const roboto = Roboto({
 })
 
 export const metadata = {
-  title: 'anny logs | 3zachm.dev',
-  description: 'ttv/anny logs',
+  title: 'misc | 3zachm.dev',
+  description: 'misc tools',
   themeColor: '#b875d7',
   viewport: {
     initialScale: 0.8,
