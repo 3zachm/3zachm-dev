@@ -30,7 +30,6 @@ export default function Home() {
       const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const progress = (scrollPosition / windowHeight);
       setScrollProgress(progress);
-      console.log(progress);
     };
     window.addEventListener('scroll', handleScroll);
     // Cleanup the event listener when the component is unmounted

@@ -19,7 +19,6 @@ export default function Vod() {
   useEffect(() => {
     if (formDate && videoData) {
       const vod = getVod(formDate as Date, videoData);
-      console.log(vod);
       setVodData(vod);
     }
   }, [formDate]);
@@ -88,7 +87,11 @@ export default function Vod() {
                 <MobileDateTimePicker
                   label="Date"
                   value={formDate}
-                  onAccept={(date) => { if (date != formDate) setFormDate(date) }}
+                  onAccept={(date: Date | null) => {
+                    if (date !== null && date !== formDate) {
+                      setFormDate(date);
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </div>
@@ -164,9 +167,7 @@ export default function Vod() {
 
 function getVod(timestamp: Date, videoData: [{ id: string, title: string, startTime: Date, endTime: Date, thumbnail: string }]) {
   // find video that contains timestamp
-  console.log(timestamp);
   const video = videoData.find((video: any) => video.startTime <= timestamp && video.endTime >= timestamp);
-  console.log(videoData);
   if (video) {
     const vodTime = Math.floor((timestamp.getTime() - video.startTime.getTime()) / 1000);
     const vodTimeFormatted = `${Math.floor(vodTime / 3600)}h${Math.floor((vodTime % 3600) / 60)}m${vodTime % 60}s`;
