@@ -116,7 +116,7 @@ export default function Home() {
                   <h1>Asayake</h1>
                 </div>
                 <div className={styles['about__content__body']}>
-                  <p>A simple yet effective JavaScript powered bot created for Discord. It&apos;s in over 350+ server, though I mostly only keep it running at this point. Solves the need for per-user color choices without granting permission nodes.</p>
+                  <p>A simple yet effective JavaScript powered bot created for Discord. It&apos;s in over 350+ servers, though I mostly only keep it running at this point. Solves the need for per-user color choices without granting permission nodes.</p>
                   <div className={styles['project__links']}>
                     <div className={styles['project__link']}>
                       <BrowserIcon />
