@@ -29,6 +29,10 @@ async function authTwitch(redis: RedisInstance) {
       }
     );
     const json = await response.json();
+    if (json.status) {
+      console.error(json);
+      return { error: "Error fetching Twitch auth token, contact me" };
+    }
     await redis.set("TWITCH.OAUTH", json.access_token, "EX", json.expires_in);
 
     return json.access_token;

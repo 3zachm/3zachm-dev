@@ -152,7 +152,7 @@ function ParseBadges ({ badgeList, badgeData }: { badgeList: string, badgeData: 
     <>
       {
         badgeArray.map((badgeString: string[]) => {
-          const badgeURL = badgeData.data.find((badge: any) => badge.set_id === badgeString[0]).versions.find((version: any) => version.id == badgeString[1]).image_url_2x;
+          const badgeURL = badgeData.data.find((badge: any) => badge.set_id === badgeString[0]).versions?.find((version: any) => version.id == badgeString[1])?.image_url_2x;
           return (
             <Image className={styles["badge__image"]} key={badgeString[0] + badgeString[1]} src={badgeURL} alt={badgeString[0]} width={18} height={18} />
           )
