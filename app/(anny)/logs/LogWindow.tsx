@@ -118,17 +118,17 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
                     if (tooltip) e.currentTarget.removeChild(tooltip);
                   }}
                   onClick={(e) => { if (e.currentTarget.dataset.vodURL) window.open(e.currentTarget.dataset.vodURL, "_blank") }}
-                  data-chattime={new Date(log.time).toISOString()}
+                  data-chattime={new Date(log.timestamp).toISOString()}
                 >
-                  <span className={styles['message__pre__date__full']}>{format(new Date(log.time), 'yyyy-MM-dd HH:mm:ss')}</span>
-                  <span className={styles['message__pre__date__mobile']}>{format(new Date(log.time), 'HH:mm')}</span>
+                  <span className={styles['message__pre__date__full']}>{format(new Date(log.timestamp), 'yyyy-MM-dd HH:mm:ss')}</span>
+                  <span className={styles['message__pre__date__mobile']}>{format(new Date(log.timestamp), 'HH:mm')}</span>
                 </span>
                 {/* badges  */}
                 <span className={styles['message__pre__badge']}>
                   <ParseBadges badgeList={log.badges} badgeData={badges} />
                 </span>
                 {/* name */}
-                <span className={styles['message__pre__name']} style={{ color: `${(log.color != "#FFFFFF") ? log.color : "#BBBBBB"}` }}>{log.user}</span>
+                <span className={styles['message__pre__name']} style={{ color: `${(log.color != "#FFFFFF") ? log.color : "#BBBBBB"}` }}>{log.user_name}</span>
                 {/* separator */}
                 <span aria-hidden="true" className={styles['message__pre__separator']}>:</span>
               </div>

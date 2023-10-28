@@ -2,8 +2,6 @@ import { getUserByName } from '@/lib/twitch/api';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 import { createRedisInstance } from '@/lib/redis';
-import { Prisma } from '@prisma/client';
-import { prisma } from '@/lib/prisma/db';
 
 export async function GET( req: NextRequest ) {
   const token = await getToken({ req, secret: process.env.SECRET });
@@ -27,61 +25,56 @@ export async function GET( req: NextRequest ) {
 
   if (username) {
     const DOMPurify = require('isomorphic-dompurify');
-    // check if username is already in redis to avoid db query
+    // check redis cache
     let redisUser = await redis.get(`TWITCH.USER_${DOMPurify.sanitize(username)}`).then((res) => JSON.parse(res as string));
-    if (redisUser?.error) {
+    if (redisUser?.error || redisUser?.data.length === 0) {
       // indicates no user match
       return NextResponse.json({ data: [], pagination: { page, limit, total: 0 } });
     }
     if (redisUser) {
       userID = parseInt(redisUser.data[0].id);
-    }
-    else {
+    } else {
       // try finding the username in the database
-      let tempUser = await prisma.logs.findFirst({
-        where: {
-          user: username
-        }
-      });
-      if (tempUser) {
-        userID = tempUser.id;
-        // cache the username to redis
-        redis.set(`TWITCH.USER_${username}`, JSON.stringify({ data: [{ id: userID }] }), 'EX', 600);
-      }
-      else {
+      const userQueryURL = new URL(process.env.QUICKWIT_INDEX_URL + '/search');
+      userQueryURL.searchParams.append('query', `user_name:${DOMPurify.sanitize(username)}`);
+      userQueryURL.searchParams.append('max_hits', '1');
+      userQueryURL.searchParams.append('sort_by_field', '-timestamp');
+
+      const userQuery = await fetch(userQueryURL.toString());
+      const userQueryRes = await userQuery.json();
+
+      if (userQueryRes.num_hits > 0) {
+        userID = userQueryRes.hits[0].user_id;
+      } else {
         // get twitch ID from username
         let usernameRes = await getUserByName(redis, username)
-        if (usernameRes.data.status == 200) {
-          userID = parseInt(usernameRes.data[0].id);
-        } else {
+        if (usernameRes.data.length === 0) {
+          // indicates no user match
           return NextResponse.json({ data: [], pagination: { page, limit, total: 0 } });
         }
+        userID = usernameRes.data[0].id;
       }
     }
   }
 
-  const query: Prisma.logsFindManyArgs = {
-    orderBy: {
-      time: 'desc'
-    },
-    where: {
-      id: userID ?? undefined,
-      message: {
-        contains: search ?? undefined
-      },
-      time: {
-        gte: startDate ? new Date(startDate) : undefined,
-        lte: endDate ? new Date(endDate) : undefined
-      }
-    },
-    skip: offset,
-    take: limit
-  };
+  const queryURL = new URL(process.env.QUICKWIT_INDEX_URL + '/search');
+  let queryParts = [];
 
-  const logRes = await prisma.$transaction([
-    prisma.logs.findMany(query),
-    prisma.logs.count({ where: query.where })
-  ]);
+  if (username) queryParts.push(`user_id:${userID}`);
+  if (search) queryParts.push(`message:${search}`);
 
-  return NextResponse.json({ data: logRes[0], pagination: { page, limit, total: logRes[1] } });
+  let queryString = queryParts.join(' '); // Join the query parts with a space
+
+  queryURL.searchParams.append('query', queryString !== '' ? queryString : '*');
+
+  // timestamps need conversion to unix
+  if (startDate) queryURL.searchParams.append('start_timestamp', `${new Date(startDate).getTime()}`);
+  if (endDate) queryURL.searchParams.append('end_timestamp', `${new Date(endDate).getTime()}`);
+  queryURL.searchParams.append('max_hits', limit.toString());
+  queryURL.searchParams.append('start_offset', offset.toString());
+  queryURL.searchParams.append('sort_by_field', '-timestamp');
+
+  const result = await fetch(queryURL.toString()).then((res) => res.json()).catch((err) => { console.error(err); return { error: err } });
+
+  return NextResponse.json({ data: result.hits, pagination: { page, limit, total: result.num_hits }, time: result.elapsed_time_micros });
 }
