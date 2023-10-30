@@ -13,7 +13,47 @@ interface LogWindowProps {
   setVodCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+interface LogLine {
+  timestamp: string;
+  user_id: number;
+  user_name: string;
+  message: string;
+  badges: string;
+  is_mod: boolean;
+  is_sub: boolean;
+  is_turbo: boolean;
+  color: string;
+}
+
+const fetcher = (url: string) => fetch(url)
+  .then((res) => {
+    if (!res.ok) throw Error("Error fetching data");
+    return res.json();
+  })
+
+const LoadingSkeletons = () => {
+  return (
+    <div className={styles['log__container'] + " " + styles['log__container--loading']}>
+      <h2>Loading...</h2>
+      {
+        // use height of container to determine how many skeletons to show, use random widths to make it look more natural (take from 100%)
+        Array(Math.floor((window.innerHeight - 100) / 20)).fill(0).map((_, i) => (
+          <Skeleton key={i} height={20} width={`${Math.floor(Math.random() * 60) + 10}%`} />
+        ))
+      }
+    </div>
+  );
+}
+
+const ErrorMessage = ({ error }: { error: any }) => {
+  return (
+    // currently unstyled, ignore className
+    <div className={styles['log__container'] + " " + styles['log__container--error']}>
+      <h2>Error loading logs</h2>
+      <code>{error.message}</code>
+    </div>
+  );
+}
 
 export default function LogWindow({ formValues, setLogCounts, setVodCount }: LogWindowProps) {
   const tempSd = formValues.startDate ? formValues.startDate.toISOString() : "";
@@ -41,22 +81,19 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
     }
   }, [videos, setVodCount, videosIsLoading, videosError]);
 
+
   if (!emotesIsLoading && !emotesError) {
     emoteData = emotes.data;
   }
 
-  if (logIsLoading || videosIsLoading) return (
-    <div className={styles['log__container'] + " " + styles['log__container--loading']}>
-      <h2>Loading...</h2>
-      {
-        // use height of container to determine how many skeletons to show, use random widths to make it look more natural (take from 100%)
-        Array(Math.floor((window.innerHeight - 100) / 20)).fill(0).map((_, i) => (
-          <Skeleton key={i} height={20} width={`${Math.floor(Math.random() * 60) + 10}%`} />
-        ))
-      }
-    </div>
-  )
-  if (logError) return <div>Error loading logs</div>;
+  if (logIsLoading || videosIsLoading || badgesIsLoading) return (
+    <LoadingSkeletons />
+  );
+
+  if (logError) return <ErrorMessage error={logError} />;
+  if (videosError) return <ErrorMessage error={videosError} />;
+  if (badgesError) return <ErrorMessage error={badgesError} />;
+  if (emotesError) return <ErrorMessage error={emotesError} />;
 
   const videoData = videos.data.map((video: any) => {
     const startTime = parseISO(video.created_at);
@@ -86,8 +123,8 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
   return (
     <div className={styles['log__container']}>
       {
-        logs.data.map((log: any) => (
-          <div key={log.msg_id}>
+        logs.data.map((log: LogLine, index: number) => (
+          <div key={index}>
             <div className={styles['log__message']}>
               <div className={styles['message__pre']}>
                 {/* clickable datetime */}
@@ -134,7 +171,7 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
               </div>
               <div className={styles['message__content']}>
                 {/* emotes */}
-                <ParseEmotes message={log.message} emoteData={emoteData} />
+                <ParseEmotes key={index} message={log.message} emoteData={emoteData} />
               </div>
             </div>
           </div>
