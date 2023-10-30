@@ -29,7 +29,7 @@ export async function GET( req: NextRequest ) {
     let redisUser = await redis.get(`TWITCH.USER_${DOMPurify.sanitize(username)}`).then((res) => JSON.parse(res as string));
     if (redisUser?.error || redisUser?.data.length === 0) {
       // indicates no user match
-      return NextResponse.json({ data: [], pagination: { page, limit, total: 0 } });
+      return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'No user found' }, { status: 404 });
     }
     if (redisUser) {
       userID = parseInt(redisUser.data[0].id);
@@ -40,17 +40,22 @@ export async function GET( req: NextRequest ) {
       userQueryURL.searchParams.append('max_hits', '1');
       userQueryURL.searchParams.append('sort_by_field', '-timestamp');
 
-      const userQuery = await fetch(userQueryURL.toString());
-      const userQueryRes = await userQuery.json();
+      const userQuery = await fetch(userQueryURL.toString())
+        .then((res) => res.json())
+        .catch((err) => { return { error: err } });
 
-      if (userQueryRes.num_hits > 0) {
-        userID = userQueryRes.hits[0].user_id;
+      if (userQuery.error) {
+        return NextResponse.json({ error: userQuery.error }, { status: 500 });
+      }
+
+      if (userQuery.num_hits > 0) {
+        userID = userQuery.hits[0].user_id;
       } else {
         // get twitch ID from username
         let usernameRes = await getUserByName(redis, username)
         if (usernameRes.data.length === 0) {
           // indicates no user match
-          return NextResponse.json({ data: [], pagination: { page, limit, total: 0 } });
+          return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'No user found' }, { status: 404 });
         }
         userID = usernameRes.data[0].id;
       }
@@ -74,7 +79,13 @@ export async function GET( req: NextRequest ) {
   queryURL.searchParams.append('start_offset', offset.toString());
   queryURL.searchParams.append('sort_by_field', '-timestamp');
 
-  const result = await fetch(queryURL.toString()).then((res) => res.json()).catch((err) => { console.error(err); return { error: err } });
+  const result = await fetch(queryURL.toString())
+    .then((res) => res.json())
+    .catch((err) => { return { error: err } });
+
+  if (result.error) {
+    return NextResponse.json({ error: result.error }, { status: 500 });
+  }
 
   return NextResponse.json({ data: result.hits, pagination: { page, limit, total: result.num_hits }, time: result.elapsed_time_micros });
 }
