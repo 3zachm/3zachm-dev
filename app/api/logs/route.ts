@@ -29,7 +29,7 @@ export async function GET( req: NextRequest ) {
     let redisUser = await redis.get(`TWITCH.USER_${DOMPurify.sanitize(username)}`).then((res) => JSON.parse(res as string));
     if (redisUser?.error || redisUser?.data.length === 0) {
       // indicates no user match
-      return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'No user found' }, { status: 404 });
+      return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'User not in database and not found on twitch, they may be suspended' }, { status: 404 });
     }
     if (redisUser) {
       userID = parseInt(redisUser.data[0].id);
@@ -55,7 +55,7 @@ export async function GET( req: NextRequest ) {
         let usernameRes = await getUserByName(redis, username)
         if (usernameRes.data.length === 0) {
           // indicates no user match
-          return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'No user found' }, { status: 404 });
+          return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'User not in database and not found on twitch, they may be suspended' }, { status: 404 });
         }
         userID = usernameRes.data[0].id;
       }
@@ -72,9 +72,9 @@ export async function GET( req: NextRequest ) {
 
   queryURL.searchParams.append('query', queryString !== '' ? queryString : '*');
 
-  // timestamps need conversion to unix
-  if (startDate) queryURL.searchParams.append('start_timestamp', `${new Date(startDate).getTime()}`);
-  if (endDate) queryURL.searchParams.append('end_timestamp', `${new Date(endDate).getTime()}`);
+  // convert time stamps from unixmillis to unix
+  if (startDate) queryURL.searchParams.append('start_timestamp', (parseInt(startDate) / 1000).toString());
+  if (endDate) queryURL.searchParams.append('end_timestamp', (parseInt(endDate) / 1000).toString());
   queryURL.searchParams.append('max_hits', limit.toString());
   queryURL.searchParams.append('start_offset', offset.toString());
   queryURL.searchParams.append('sort_by_field', '-timestamp');
@@ -85,6 +85,10 @@ export async function GET( req: NextRequest ) {
 
   if (result.error) {
     return NextResponse.json({ error: result.error }, { status: 500 });
+  }
+
+  if (result.num_hits === 0) {
+    return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'No messages found for this user' }, { status: 404 });
   }
 
   return NextResponse.json({ data: result.hits, pagination: { page, limit, total: result.num_hits }, time: result.elapsed_time_micros });

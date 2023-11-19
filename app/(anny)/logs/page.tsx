@@ -28,8 +28,8 @@ export default function Logs() {
       setFormValues({
         username: initialParams.get("username") ?? "",
         search: initialParams.get("search") ?? "",
-        startDate: initialParams.get("startDate") ? parseISO(initialParams.get("startDate") ?? "") : null,
-        endDate: initialParams.get("endDate") ? parseISO(initialParams.get("endDate") ?? "") : null,
+        startDate: initialParams.get("startDate") ? new Date(Number(initialParams.get("startDate"))) : null,
+        endDate: initialParams.get("endDate") ? new Date(Number(initialParams.get("endDate"))) : null,
         // do not allow page 0
         page: Number(initialParams.get("page")) > 0 ? Number(initialParams.get("page")) : 1
       });
@@ -40,8 +40,10 @@ export default function Logs() {
       
       if (formValues.username) params.set("username", formValues.username);
       if (formValues.search) params.set("search", formValues.search);
-      if (formValues.startDate) params.set("startDate", formValues.startDate?.toISOString());
-      if (formValues.endDate) params.set("endDate", formValues.endDate?.toISOString());
+      // unix seconds
+      if (formValues.startDate) params.set("startDate", formValues.startDate?.getTime().toString());
+      console.log(formValues.endDate);
+      if (formValues.endDate) params.set("endDate", formValues.endDate?.getTime().toString());
       if (formValues.page) params.set("page", String(formValues.page));
         else params.set("page", "1");
 

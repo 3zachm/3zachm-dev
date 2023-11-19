@@ -27,7 +27,14 @@ interface LogLine {
 
 const fetcher = (url: string) => fetch(url)
   .then((res) => {
-    if (!res.ok) throw Error("Error fetching data");
+    // use error in body to throw error
+    if (!res.ok) {
+      return res.json().then((body) => {
+        throw new Error(body.error);
+      }).catch((err) => {
+        throw new Error(err);
+      });
+    }
     return res.json();
   })
 
@@ -50,14 +57,14 @@ const ErrorMessage = ({ error }: { error: any }) => {
     // currently unstyled, ignore className
     <div className={styles['log__container'] + " " + styles['log__container--error']}>
       <h2>Error loading logs</h2>
-      <code>{error.message}</code>
+      <p>{error.message}</p>
     </div>
   );
 }
 
 export default function LogWindow({ formValues, setLogCounts, setVodCount }: LogWindowProps) {
-  const tempSd = formValues.startDate ? formValues.startDate.toISOString() : "";
-  const tempEd = formValues.endDate ? formValues.endDate.toISOString() : "";
+  const tempSd = formValues.startDate?.getTime() ?? "";
+  const tempEd = formValues.endDate?.getTime() ?? "";
   const apiURL = `/api/logs?p=${formValues.page}&u=${formValues.username}&q=${formValues.search}&sd=${tempSd}&ed=${tempEd}`;
   const apiBadges = `/api/twitch/badges?c=56418014&m=1`;
   const apiVideos = `/api/twitch/videos?c=56418014`;
