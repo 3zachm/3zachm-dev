@@ -73,10 +73,10 @@ export default function Home() {
                   <p>I lived in LA for most of my life, but recently settled down in downtown Seattle!</p>
                   <p>As of now, I&apos;m a computer science student though I like to mess around with frontend and servers whenever I have the chance.</p>
                   <h3>Interests</h3>
-                  <p>My mind flashes between rhythm games, retro game collecting, learning kanji, and wishing I could sell my kidneys for vintage computers so I could also keep the lights on.</p>
-                  <p>...rent is more important though and I don&apos;t think my partner would want my kidneys gone anyway</p>
+                  <p>OS development is fascinating and something I want to learn more about. I enjoy games (Minecraft, Rocket League, osu!, etc.) including retro game collecting and console modding.</p>
+                  <p>Current nostalgia phase is pre-2013 iPhone and DS/DSi games! Have a billion games on Steam yet still manage to play old games most of time...</p>
                   <h3>Coding</h3>
-                  <p>I like TypeScript, C++, React/Next.js, and databases!</p>
+                  <p>I enjoy C++, React/Next.js (with TypeScript), and databases!</p>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function Home() {
                   <h1>Public transit</h1>
                 </div>
                 <div className={styles['about__content__body']}>
-                  <p>I have an unreasonable fascination for public transit... <br />The day <Link href="https://www.soundtransit.org/system-expansion/east-link-extension" target='_blank'>East Link</Link> is finished I will be happy</p>
+                  <p>I love public transit!!!!! <br />Waiting for <Link href="https://www.soundtransit.org/system-expansion/east-link-extension" target='_blank'>East Link</Link> to be finished so I will be happy</p>
                 </div>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function Home() {
                       <BrowserIcon />
                       <p>Site</p>
                       <div className={styles['project__link__tooltip']}>
-                        <p>Not available</p>
+                        <p>Not public</p>
                       </div>
                     </div>
                   </div>
@@ -160,4 +160,3 @@ export default function Home() {
     </>
   )
 }
-

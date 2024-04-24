@@ -25,7 +25,7 @@ export default function page() {
           <h2>Liability</h2>
           <p>Asayake is not liable for any loss or damage caused by the use of Asayake, whether such be lost or damaged data, or any other damages that may arise from the use of Asayake. Please be mindful of servers and services that you invite the bot to. Access to the bot may be removed if usage is deemed to be in violation of the Terms of Service, or if activities by the end user are deemed malicious or illegal. Illegal activity includes violations of the Discord ToS and community guidelines.</p>
           <h2>Contact</h2>
-          <p>If you have any questions or concerns about the Terms of Service, please contact us at zach@3zachm.dev | 3zachm4@gmail.com or through discord DM via 3zachm#9999.</p>
+          <p>If you have any questions or concerns about the Terms of Service, please contact us at zach@3zachm.dev or through discord DM via @3zachm</p>
 
           <h1>Privacy Policy</h1>
           <h2>Information We Collect</h2>
