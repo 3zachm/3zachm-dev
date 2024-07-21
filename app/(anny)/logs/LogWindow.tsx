@@ -84,7 +84,7 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
 
   useEffect(() => {
     if (!videosIsLoading && !videosError) {
-      setVodCount(videos.data.length);
+      setVodCount(videos.data?.length ?? 0);
     }
   }, [videos, setVodCount, videosIsLoading, videosError]);
 
