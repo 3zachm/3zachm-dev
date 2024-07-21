@@ -241,6 +241,7 @@ function ParseEmotes({ message, emoteData }: { message: string, emoteData: Twitc
 
 
 function messageVod(e: any, videoData: [{ id: string, title: string, startTime: Date, endTime: Date, thumbnail: string }]) {
+  if (!videoData) return false;
   e.preventDefault();
   if (e.currentTarget.dataset.vodURL) return e.currentTarget.dataset.vodURL;
   const timestamp = new Date(e.currentTarget.dataset.chattime);

@@ -5,14 +5,16 @@ import { Providers } from '../providers'
 import NavBar from './NavBar'
 import styles from './layout.module.scss'
 import Knowledge from './Knowledge'
+import { Viewport } from 'next'
 
 export const metadata = {
   title: '3zachm.dev',
-  themeColor: '#b875d7',
   description: 'hi!',
-  viewport: {
-    initialScale: 0.8,
-  }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#b875d7',
+  initialScale: 0.8,
 }
 
 const vietnam = Be_Vietnam_Pro({

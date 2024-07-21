@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import styles from './layout.module.scss';
 import ContentWrap from './ContentWrap';
 import { Providers } from '@/app/providers';
+import { Viewport } from 'next';
 
 const vietnam = Be_Vietnam_Pro({
   subsets: ['latin'],
@@ -27,10 +28,14 @@ const roboto = Roboto({
 export const metadata = {
   title: 'anny logs | 3zachm.dev',
   description: 'ttv/anny logs',
-  themeColor: '#b875d7',
   viewport: {
     initialScale: 0.8,
   }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#b875d7',
+  initialScale: 0.8,
 }
 
 export default function RootLayout({
