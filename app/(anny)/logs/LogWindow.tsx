@@ -102,7 +102,7 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
   if (badgesError) return <ErrorMessage error={badgesError} />;
   if (emotesError) return <ErrorMessage error={emotesError} />;
 
-  const videoData = videos.data.map((video: any) => {
+  const videoData = videos.data?.map((video: any) => {
     const startTime = parseISO(video.created_at);
     const length = video.duration; // formatted like 03h20m00s, may be shorter
     const timeRegex = /(\d+)(h|m|s)/g;
