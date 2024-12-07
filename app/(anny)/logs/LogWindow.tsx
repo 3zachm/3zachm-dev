@@ -15,6 +15,7 @@ interface LogWindowProps {
 
 interface LogLine {
   timestamp: string;
+  channel?: string;
   user_id: number;
   user_name: string;
   message: string;
@@ -175,6 +176,8 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
                   <span className={styles['message__pre__date__full']}>{format(new Date(log.timestamp), 'yyyy-MM-dd HH:mm:ss')}</span>
                   <span className={styles['message__pre__date__mobile']}>{format(new Date(log.timestamp), 'HH:mm')}</span>
                 </span>
+                {/* channel */}
+                <span className={styles['message__pre__channel']}>#{log.channel ?? "anny"}</span>
                 {/* badges  */}
                 <span className={styles['message__pre__badge']}>
                   <ParseBadges badgeList={log.badges} badgeData={badges} />
