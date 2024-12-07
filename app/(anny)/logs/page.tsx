@@ -36,14 +36,12 @@ export default function Logs() {
     } else {
       // update query params
       const params = new URLSearchParams();
-      // if page is different, use, other set to 1
-      
       if (formValues.username) params.set("username", formValues.username);
       if (formValues.search) params.set("search", formValues.search);
       // unix seconds
       if (formValues.startDate) params.set("startDate", formValues.startDate?.getTime().toString());
-      console.log(formValues.endDate);
       if (formValues.endDate) params.set("endDate", formValues.endDate?.getTime().toString());
+      // if page is different, use, other set to 1
       if (formValues.page) params.set("page", String(formValues.page));
         else params.set("page", "1");
 
@@ -139,7 +137,7 @@ export default function Logs() {
             <div className={styles['stat__container']}>
               <div className={styles['stat__item']}>
                 <div className={styles['stat__item__value']}>
-                  <p>{logCounts.total.toLocaleString("en-US")}</p>
+                  <p>{logCounts.total ? logCounts.total.toLocaleString("en-US") : 0}</p>
                 </div>
                 <div className={styles['stat__item__title']}>
                   <h3>messages</h3>

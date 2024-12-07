@@ -77,7 +77,7 @@ export async function GET( req: NextRequest ) {
   if (endDate) queryURL.searchParams.append('end_timestamp', (parseInt(endDate) / 1000).toString());
   queryURL.searchParams.append('max_hits', limit.toString());
   queryURL.searchParams.append('start_offset', offset.toString());
-  queryURL.searchParams.append('sort_by_field', '-timestamp');
+  queryURL.searchParams.append('sort_by_field', 'timestamp');
 
   const result = await fetch(queryURL.toString())
     .then((res) => res.json())
@@ -88,7 +88,7 @@ export async function GET( req: NextRequest ) {
   }
 
   if (result.num_hits === 0) {
-    return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'No messages found for this user' }, { status: 404 });
+    return NextResponse.json({ data: [], pagination: { page, limit, total: 0 }, error: 'No messages found' }, { status: 404 });
   }
 
   return NextResponse.json({ data: result.hits, pagination: { page, limit, total: result.num_hits }, time: result.elapsed_time_micros });

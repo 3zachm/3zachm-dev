@@ -1,16 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { stringify } from 'querystring';
+import { json } from 'stream/consumers';
+import { createRedisInstance } from '@/lib/redis';
 
 export async function GET( req: NextRequest ) {
-  const queryURL = new URL(process.env.QUICKWIT_INDEX_URL + '/search');
-  queryURL.searchParams.append('query', `message:erm`);
+  // cache the result in redis
+  const redis = createRedisInstance();
+  if (!redis) return new Response ('Internal Server Error', { status: 500 });
 
-  const result = await fetch(queryURL.toString(), { next: { revalidate: parseInt(process.env.ERM_CACHE_TIME ?? '10')  } })
-    .then((res) => res.json())
-    .catch((err) => { return { error: err } });
+  let result = parseInt(await redis.get('ERMCOUNT') ?? '0');
+  if (!result) {
+    const queryURL = new URL(process.env.QUICKWIT_INDEX_URL + '/search');
+    queryURL.searchParams.append('query', `message:erm`);
 
-  if (result.error) {
-    return NextResponse.json({ error: result.error }, { status: 500 });
+    const quickwitQuery = await fetch(queryURL.toString(), { cache: 'no-cache' })
+      .then((res) => res.json())
+      .catch((err) => { return { error: err } }
+    );
+
+    if (quickwitQuery.error || quickwitQuery.num_hits === 0) {
+      return NextResponse.json({ error: quickwitQuery.error }, { status: 500 });
+    }
+
+    result = parseInt(quickwitQuery.num_hits ?? '0');
+    await redis.set('ERMCOUNT', result, 'EX', 5);
   }
 
-  return NextResponse.json({ count: result.num_hits, time: result.elapsed_time_micros });
+  return NextResponse.json({ count: result });
 }

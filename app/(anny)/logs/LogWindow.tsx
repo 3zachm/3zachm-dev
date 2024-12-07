@@ -126,6 +126,14 @@ export default function LogWindow({ formValues, setLogCounts, setVodCount }: Log
     }
   });
 
+  if (!logs.data || logs.data.length === 0) {
+    return (
+      <div className={styles['log__container']}>
+        <h2>No log data, likely an error</h2>
+        <a href="/logs">Reload</a>
+      </div>
+    );
+  }
 
   return (
     <div className={styles['log__container']}>
